@@ -11,4 +11,4 @@ def login(request):
     return render(request, 'myapp/sighnup.html')
 
 def sighup(request):
-    return render(request, 'myapp/signin.html')
+    return render(request, 'myapp/sighnup.html')
