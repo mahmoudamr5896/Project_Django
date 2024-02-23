@@ -44,7 +44,12 @@
             <i class="bi bi-list mobile-nav-toggle"></i>
           </nav>
           <!-- .navbar -->
-          {% block Section %}
+          {% block 'Section' %}
+        
+          {% endblock %}
+         
+    <main>
+        {% block content %}
            <section id="hero" class="d-flex align-items-center justify-content-center">
             <div class="container" data-aos="fade-up">
         
@@ -90,10 +95,6 @@
         
             </div>
           </section>
-          {% endblock %}
-         
-    <main>
-        {% block content %}
         {% endblock %}
     </main>
 
