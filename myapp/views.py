@@ -12,7 +12,6 @@ from django.db.models import Avg
 #  Mahmoud Amr Working In home :
 def index(request):
     # return HttpResponse("Happy Day Mahmoud")
-
     return render(request, 'myapp/home.html')
 NULL={}
 
