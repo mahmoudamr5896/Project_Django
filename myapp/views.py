@@ -8,7 +8,6 @@ from .forms import ProjectForm, CommentForm, DonationForm, ReportForm, RatingFor
 from django.db.models import Avg
 
 # Create your views here.
-
 #  Mahmoud Amr Working In home :
 def index(request):
     # return HttpResponse("Happy Day Mahmoud")
@@ -48,9 +47,37 @@ def getUser(request):
 #     return HttpResponse(html_template.render(context, request))
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #  get user from session
-
-
 def login(request):
     return render(request, 'myapp/sighnup.html')
 
