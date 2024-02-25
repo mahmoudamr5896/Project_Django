@@ -12,3 +12,6 @@ def login(request):
 
 def sighup(request):
     return render(request, 'myapp/sighnup.html')
+
+
+
