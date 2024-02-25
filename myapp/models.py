@@ -1,38 +1,66 @@
+# models.py
 from django.db import models
-
-# Create your models here.
 from django.contrib.auth.models import User
 
 class Category(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
+    def _str_(self):
+        return self.name
 
 class Project(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=200)
     details = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    pictures = models.ManyToManyField('Picture', blank=True)
     total_target = models.DecimalField(max_digits=10, decimal_places=2)
-    tags = models.ManyToManyField('Tag', blank=True)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
+    def _str_(self):
+        return self.title
 
 class Picture(models.Model):
-    image = models.ImageField(upload_to='project_images/')
-
-class Tag(models.Model):
-    name = models.CharField(max_length=50)
-
-class Donation(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    donated_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    donated_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='project_images/')
+    def _str_(self):
+        return self.image
 
 class Comment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    text = models.TextField()
-    commented_by = models.ForeignKey(User, on_delete=models.CASCADE)
-    commented_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+    
 
+class Donation(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+
+class Report(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reason = models.TextField()
+    
+class ProjectReport(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reason = models.TextField()
+
+class CommentReport(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reason = models.TextField()
+
+
+
+class Rating(models.Model):
+    RATING_CHOICES = [
+        (1, '1 star'),
+        (2, '2 stars'),
+        (3, '3 stars'),
+        (4, '4 stars'),
+        (5, '5 stars'),
+    ]
+    
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    value = models.IntegerField(choices=RATING_CHOICES)
