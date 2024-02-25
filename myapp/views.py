@@ -3,6 +3,9 @@ from audioop import ratecv
 from django.db.models import Avg, Sum
 from django.shortcuts import render 
 from django.http import HttpResponse
+from .models import Project, Comment, Donation, Report, Rating, Tag
+from .forms import ProjectForm, CommentForm, DonationForm, ReportForm, RatingForm
+from django.db.models import Avg
 from django.template import loader
 
 from .models import Donation, Project
@@ -57,4 +60,6 @@ def login(request):
 
 def sighup(request):
     return render(request, 'myapp/sighnup.html')
+
+
 
