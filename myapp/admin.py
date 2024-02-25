@@ -7,7 +7,6 @@ from myapp.models import Category, CommentReport, Donation, Picture, Project, Co
 # admin.site.register(Category)
 admin.site.register(Project)
 admin.site.register(Picture)
-# admin.site.register(Report)
 admin.site.register(Report)
 admin.site.register(ProjectReport)
 admin.site.register(CommentReport)
