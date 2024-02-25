@@ -50,8 +50,6 @@ class CommentReport(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     reason = models.TextField()
 
-
-
 class Rating(models.Model):
     RATING_CHOICES = [
         (1, '1 star'),
