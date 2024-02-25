@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ project.title }}</title>
+</head>
+<body>
+    <h1>{{ project.title }}</h1>
+    <p>{{ project.details }}</p>
+    <p>Category: {{ project.category }}</p>
+    <p>Total Target: {{ project.total_target }}</p>
+    <p>Start Time: {{ project.start_time }}</p>
+    <p>End Time: {{ project.end_time }}</p>
+    
+    <h2>Comments:</h2>
+    <ul>
+        {% for comment in comments %}
+            <li>{{ comment.content }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Donations:</h2>
+    <ul>
+        {% for donation in donations %}
+            <li>{{ donation.amount }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Reports:</h2>
+    <ul>
+        {% for report in reports %}
+            <li>{{ report.reason }}</li>
+        {% endfor %}
+    </ul>
+    
+    <h2>Ratings:</h2>
+    <ul>
+        {% for rating in ratings %}
+            <li>{{ rating.value }}</li>
+        {% endfor %}
+    </ul>
+    
+    <a href="{% url 'add-comment' project.id %}">Add Comment</a>
+    <h2>Donations:</h2>
+<ul>
+    {% for donation in donations %}
+        <li>{{ donation.amount }}</li>
+    {% endfor %}
+</ul>
+
+<form method="post">
+    {% csrf_token %}
+    {{ donation_form.as_p }}
+    <button type="submit">Make Donation</button>
+</form>
+<h2>Overall Average Rating: {{ average_rating|default:"No ratings yet" }} %</h2>
+
+<h2>Ratings:</h2>
+{% if ratings %}
+    <ul>
+        {% for rating in ratings %}
+            <li>{{ rating.value }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No ratings yet.</p>
+{% endif %}
+
+<h2>Rate This Project:</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ rating_form.as_p }}
+    <button type="submit">Rate</button>
+
+    <h3>Similar Projects:</h3>
+<ul>
+  {% for similar_project in similar_projects %}
+    <li>{{ similar_project.title }}</li>
+  {% endfor %}
+</ul>
+</form>
+</body>
+</html>

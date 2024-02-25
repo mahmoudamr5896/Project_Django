@@ -22,7 +22,7 @@ from myapp.views import index ,login ,sighup
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("home/",index ,name='index'),
+    path("",index ,name='index'),
     path("login/",login ,name='login'),
     path("sighup/",sighup ,name='sighup'),
 ]
