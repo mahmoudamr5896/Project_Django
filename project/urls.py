@@ -16,19 +16,30 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+<<<<<<< HEAD
 from myapp.views import add_comment, create_project, index ,login, project_detail, project_list ,sighup
 
+=======
+from myapp.views import index ,login ,sighup 
+>>>>>>> a3c7d0dee969aa83de1acca9609b6a75baa9c192
 
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("home/",index ,name='index'),
+    path("",index ,name='index'),
     path("login/",login ,name='login'),
     path("sighup/",sighup ,name='sighup'),
+<<<<<<< HEAD
     
     path('create/',create_project, name='create-project'),
     path('list/', project_list, name='project-list'),
     path('<int:project_id>/', project_detail, name='project-detail'),
     path('<int:project_id>/comment/', add_comment, name='add-comment'),
+=======
+    # path('create/', create_project, name='create-project'),
+    # path('list/', project_list, name='project-list'),
+    # path('<int:project_id>/', project_detail, name='project-detail'),
+    # path('<int:project_id>/comment/', add_comment, name='add-comment'),
+>>>>>>> a3c7d0dee969aa83de1acca9609b6a75baa9c192
 ]
