@@ -20,9 +20,7 @@ class Project(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    
-
-    
+      
 class SimilarProject(models.Model):
     base_project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='base_project')
     similar_project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='similar_project')
@@ -72,3 +70,12 @@ class Rating(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     value = models.IntegerField(choices=RATING_CHOICES)
+
+
+class FeaturedProject(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    # Add other fields as needed
+
+
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    rate = models.DecimalField(max_digits=5, decimal_places=2)
