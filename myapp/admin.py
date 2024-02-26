@@ -13,6 +13,7 @@ admin.site.register(CommentReport)
 admin.site.register(Donation)
 admin.site.register(Comment)
 admin.site.register(Rating)
+admin.site.register(Category)
 
 from django.contrib import admin
 

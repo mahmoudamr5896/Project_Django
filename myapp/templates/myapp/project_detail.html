@@ -3,6 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>{{ project.title }}</title>
+    <style>
+        /* Add your CSS styles here */
+        .container {
+            max-height: 400px; /* Define the maximum height of the container */
+            overflow-y: auto; /* Enable vertical scrolling */
+            border: 1px solid #ccc; /* Add border for visual appeal */
+            padding: 10px; /* Add padding to the container */
+            margin-bottom: 20px; /* Add some space between elements */
+        }
+        /* Style for individual comments */
+        .comment {
+            margin-bottom: 10px; /* Add some space between comments */
+        }
+    </style>
 </head>
 <body>
     <h1>{{ project.title }}</h1>
@@ -12,72 +26,88 @@
     <p>Start Time: {{ project.start_time }}</p>
     <p>End Time: {{ project.end_time }}</p>
     
-    <h2>Comments:</h2>
-    <ul>
-        {% for comment in comments %}
-            <li>{{ comment.content }}</li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h2>Comments:</h2>
+        <ul>
+            {% for comment in comments %}
+                <li class="comment">{{ comment.content }}</li>
+            {% endfor %}
+        </ul>
+    </div>
     
-    <h2>Donations:</h2>
-    <ul>
-        {% for donation in donations %}
-            <li>{{ donation.amount }}</li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h2>Donations:</h2>
+        <ul>
+            {% for donation in donations %}
+                <li>{{ donation.amount }}</li>
+            {% endfor %}
+        </ul>
+    </div>
     
-    <h2>Reports:</h2>
-    <ul>
-        {% for report in reports %}
-            <li>{{ report.reason }}</li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h2>Reports:</h2>
+        <ul>
+            {% for report in reports %}
+                <li>{{ report.reason }}</li>
+            {% endfor %}
+        </ul>
+    </div>
     
-    <h2>Ratings:</h2>
-    <ul>
-        {% for rating in ratings %}
-            <li>{{ rating.value }}</li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h2>Ratings:</h2>
+        <ul>
+            {% for rating in ratings %}
+                <li>{{ rating.value }}</li>
+            {% endfor %}
+        </ul>
+    </div>
     
     <a href="{% url 'add-comment' project.id %}">Add Comment</a>
-    <h2>Donations:</h2>
-<ul>
-    {% for donation in donations %}
-        <li>{{ donation.amount }}</li>
-    {% endfor %}
-</ul>
+    
+    <div class="container">
+        <h2>Donations:</h2>
+        <ul>
+            {% for donation in donations %}
+                <li>{{ donation.amount }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 
-<form method="post">
-    {% csrf_token %}
-    {{ donation_form.as_p }}
-    <button type="submit">Make Donation</button>
-</form>
-<h2>Overall Average Rating: {{ average_rating|default:"No ratings yet" }} %</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ donation_form.as_p }}
+        <button type="submit">Make Donation</button>
+    </form>
+    
+    <div class="container">
+        <h2>Overall Average Rating: {{ average_rating|default:"No ratings yet" }} %</h2>
 
-<h2>Ratings:</h2>
-{% if ratings %}
-    <ul>
-        {% for rating in ratings %}
-            <li>{{ rating.value }}</li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p>No ratings yet.</p>
-{% endif %}
+        <h2>Ratings:</h2>
+        {% if ratings %}
+            <ul>
+                {% for rating in ratings %}
+                    <li>{{ rating.value }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No ratings yet.</p>
+        {% endif %}
 
-<h2>Rate This Project:</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ rating_form.as_p }}
-    <button type="submit">Rate</button>
+        <h2>Rate This Project:</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ rating_form.as_p }}
+            <button type="submit">Rate</button>
+        </form>
+    </div>
 
-    <h3>Similar Projects:</h3>
-<ul>
-  {% for similar_project in similar_projects %}
-    <li>{{ similar_project.title }}</li>
-  {% endfor %}
-</ul>
-</form>
+    <div class="container">
+        <h3>Similar Projects:</h3>
+        <ul>
+            {% for similar_project in similar_projects %}
+                <li>{{ similar_project.title }}</li>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>
