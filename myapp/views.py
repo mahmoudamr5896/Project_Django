@@ -1,6 +1,7 @@
 from asyncio import _register_task
 from audioop import ratecv
 from unittest import loader
+from urllib import request
 from django.db.models import Avg, Sum
 from django.shortcuts import render ,redirect
 from django.http import HttpResponse
@@ -83,6 +84,8 @@ def search(request):
         html_template = loader.get_template('')
         return HttpResponse(html_template.render(context, request))
 
+def team(request):
+    return render(request, 'myapp/ourTeam.html')
     
 
 def create_project(request):

@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from myapp.views import add_comment, create_project, index ,login, project_detail, project_list ,sighup,search
+from myapp.views import add_comment, create_project, index ,login, project_detail, project_list ,sighup,search, team
 
 
 
@@ -31,4 +31,5 @@ urlpatterns = [
     path('list/', project_list, name='list'),
     path('<int:project_id>/', project_detail, name='project-detail'),
     path('<int:project_id>/comment/', add_comment, name='add-comment'),
+    path('team/',team,name='team')
 ]
