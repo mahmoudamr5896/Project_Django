@@ -1,50 +1,89 @@
 from asyncio import _register_task
 from audioop import ratecv
+from unittest import loader
 from django.db.models import Avg, Sum
 from django.shortcuts import render ,redirect
 from django.http import HttpResponse
-from .models import Project, Comment, Donation, Report, Rating,Tag
+from .models import FeaturedProject, Project, Comment, Donation, Report, Rating,Tag
 from .forms import ProjectForm, CommentForm, DonationForm, ReportForm, RatingForm
 from django.db.models import Avg
 
 # Create your views here.
 #  Mahmoud Amr Working In home :
-def index(request):
+# def index(request):
     # return HttpResponse("Happy Day Mahmoud")
-    return render(request, 'myapp/home.html')
+    # return render(request, 'myapp/home.html')
 NULL={}
-
 def getUser(request):
         user = _register_task.objects.get(id=request.session['user_id'])
         return user
 
-# def index(request):
-#     if 'user_id' in request.session:
-#         user = getUser(request)
-#     else:
-#         user = NULL 
-#     highest_rated_projects = Project.objects.annotate(
-#        avg_rate=Avg('rate__rate')).order_by('-avg_rate')[:5]
-#     last_5_projects = Project.objects.all().order_by('-id')[:5]
-#     featured_projects = Project.objects.filter(is_featured=1)[:5]
+def index(request):
+    if 'user_id' in request.session:
+        user = getUser(request)
+    else:
+        user = NULL 
+    highest_rated_projects = Project.objects.order_by('-rating__value')[:5]
 
-#     images = []
-#     for project in highest_rated_projects:
-#         images.append(project.image_set.all().first().images.url)
+    latest_projects = Project.objects.order_by('-start_time')[:5]
 
-#     context = {
-#         'highest_rated_projects':highest_rated_projects,
-#         'latest_5_projects': last_5_projects,
-#         'featured_projects': featured_projects,
-#         'images': images,
-#         'projects_count': len(Project.objects.all()),
-#         'donors_count': len(Donation.objects.all()),
-#         'reviews_count': len(ratecv.objects.all()),
-#         'user': user
-#     }
+    latest_featured_projects = FeaturedProject.objects.order_by('-id')[:5]
+
+    return render(request, 'myapp/home.html', {
+        'highest_rated_projects': highest_rated_projects,
+        'latest_projects': latest_projects,
+        'latest_featured_projects': latest_featured_projects,
+    })
+
+
+# Handel Search 
+def search(request):
+    if 'user_id' not in request.session:
+        user = NULL
+    else:
+        user = getUser(request)
+    context = {}
+    try:
+        search_post = request.GET.get('search')
+
+        if len(search_post.strip()) > 0:
+            projects = Project.objects.filter(title__icontains=search_post)
+            searched_tags = Tag.objects.filter(name__icontains=search_post)
+            donations = []
+            progress_values = []
+            images = []
+            for project in projects:
+                donate = project.donation_set.all().aggregate(Sum("donation"))
+                total_donation = donate["donation__sum"] if donate["donation__sum"] else 0
+
+                progress_values.append(
+                    total_donation * 100/project.total_target)
+                donations.append(total_donation)
+                images.append(project.image_set.all().first().images.url)
+
+            context = {
+                'projects': projects, 
+                'tags': searched_tags, 
+                'images': images,
+                'donations': donations,
+                'progress_values': progress_values,
+                'user':user}
+
+            if(len(projects) <= 0):
+                context.update(
+                    {'title': 'No Projects Found for "'+search_post+'"'})
+            if(len(searched_tags) <= 0):
+                context.update(
+                    {'title_tags': 'No Tags Found for "'+search_post + '"'})
+            return render(request, "myapp/search-result.html", context)
+        else:
+            return render(request, "myapp/home.html", context)
+
+    except Project.DoesNotExist:
+        html_template = loader.get_template('')
+        return HttpResponse(html_template.render(context, request))
+
     
-#     html_template = loader.get_template('myapp/index.html')
-#     return HttpResponse(html_template.render(context, request))
 
 def create_project(request):
     if request.method == 'POST':
@@ -148,3 +187,26 @@ def sighup(request):
 
 
 
+
+    # highest_rated_projects = Project.objects.annotate(
+    #    avg_rate=Avg('rate__rate')).order_by('-avg_rate')[:5]
+    # last_5_projects = Project.objects.all().order_by('-id')[:5]
+    # featured_projects = Project.objects.filter(is_featured=1)[:5]
+
+    # images = []
+    # for project in highest_rated_projects:
+    #     images.append(project.image_set.all().first().images.url)
+
+    # context = {
+    #     'highest_rated_projects':highest_rated_projects,
+    #     'latest_5_projects': last_5_projects,
+    #     'featured_projects': featured_projects,
+    #     'images': images,
+    #     'projects_count': len(Project.objects.all()),
+    #     'donors_count': len(Donation.objects.all()),
+    #     'reviews_count': len(ratecv.objects.all()),
+    #     'user': user
+    # }
+    
+    # html_template = loader.get_template('myapp/index.html')
+    # return HttpResponse(html_template.render(context, request))
