@@ -26,9 +26,9 @@ urlpatterns = [
     path("",index ,name='index'),
     path("login/",login ,name='login'),
     path("sighup/",sighup ,name='sighup'),
-    path('search-result', search, name='search-result'),
-    path('create/',create_project, name='create-project'),
-    path('list/', project_list, name='project-list'),
+    path('search-result/', search, name='search-result'),
+    path('create/',create_project, name='create'),
+    path('list/', project_list, name='list'),
     path('<int:project_id>/', project_detail, name='project-detail'),
     path('<int:project_id>/comment/', add_comment, name='add-comment'),
 ]

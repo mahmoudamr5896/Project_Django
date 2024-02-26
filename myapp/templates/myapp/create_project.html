@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +9,9 @@
     <!-- Include CSS and JS for file upload library -->
     <link rel="stylesheet" href="path/to/file/upload/library.css">
 </head>
+{% block 'Section' %}
 <body>
+
     <h1>Create New Project</h1>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -17,4 +22,9 @@
     <!-- Include JS for file upload library -->
     <script src="path/to/file/upload/library.js"></script>
 </body>
+
+{% endblock %}
+
+
+
 </html>

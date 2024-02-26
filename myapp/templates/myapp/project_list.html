@@ -1,9 +1,12 @@
+{% extends "base.html" %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Project List</title>
 </head>
+{% block 'Section' %}
 <body>
     <h1>Project List</h1>
     <ul>
@@ -12,4 +15,8 @@
         {% endfor %}
     </ul>
 </body>
+
+{% endblock %}
+
+
 </html>
