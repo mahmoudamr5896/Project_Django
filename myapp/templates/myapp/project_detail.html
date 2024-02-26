@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +7,8 @@
     <title>{{ project.title }}</title>
 </head>
 <body>
+    {% block content %}
+
     <h1>{{ project.title }}</h1>
     <p>{{ project.details }}</p>
     <p>Category: {{ project.category }}</p>
@@ -54,7 +58,6 @@
     <button type="submit">Make Donation</button>
 </form>
 <h2>Overall Average Rating: {{ average_rating|default:"No ratings yet" }} %</h2>
-
 <h2>Ratings:</h2>
 {% if ratings %}
     <ul>
@@ -79,5 +82,7 @@
   {% endfor %}
 </ul>
 </form>
+{% endblock %}
 </body>
+
 </html>

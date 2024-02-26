@@ -2,11 +2,17 @@
 {% load static %}
 
 
-
+          {% block Cat %}
+          
+          <ul>
+            {% for cat in categories %}
+            <li><a href="{% url 'category_projects' cat.id %}" class="text-dark">{{ cat.name }}</a></li>
+            {% endfor %}
+          </ul>
+          {% endblock %}
 
 
 {% block content %}
-
 <section id="hero" class="d-flex align-items-center justify-content-center">
  <div class="container" data-aos="fade-up">
 
@@ -19,29 +25,51 @@
 
    <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
     <h2>Highest Rated Projects</h2>
-    <ul>
         {% for project in highest_rated_projects %}
-            <li>{{ project.title }} - Rating: {{ project.rating.value }}</li>
+        <div class="col-xl-2 col-md-4">
+          <div class="icon-box">
+          <img src="../../../static/img/team-1.jpg" style="height: 100px;">
+            <h3><a href="">{{ project.title }} - Rating: {{ project.rating.value }}</a></h3>
+          </div>
+      </div>
         {% endfor %}
-    </ul>
 </div>
    </div>
  </div>
 </section>
-
 {% endblock %}
 {% block 'Section' %}
 <section id="services" class="services">
     <div class="container" data-aos="fade-up">
-
       <div class="section-title">
         <h2>Projects</h2>
         <p>Check our Latest</p>
-      </div>
+      </div><div class="row"></div>
       {% for project in latest_projects %}
+        <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" style="width: auto;">
+          <div class="icon-box">
+            <img src="../../../static/img/team-1.jpg" style="height: 200px;">
+            <div class="icon"><i class="bx bxl-dribbble"></i></div>
+            <h4><a href="">{{ project.title }} </a></h4>
+            <p>Start Time: {{ project.start_time }}</p>
+          </div>
+         {% endfor %} </div>
+      </div>
+
+    </div>
+  </section>
+  <section id="services" class="services">
+    <div class="container" data-aos="fade-up">
+
+      <div class="section-title">
+        <h2>Projects</h2>
+        <p>Check our Featured Project</p>
+      </div>
+      {% for project in latest_featured_projects %}
       <div class="row">
         <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
           <div class="icon-box">
+            <img src="../../../static/img/team-1.jpg" style="height: 200px;">
             <div class="icon"><i class="bx bxl-dribbble"></i></div>
             <h4><a href="">{{ project.title }} </a></h4>
             <p>Start Time: {{ project.start_time }}</p>

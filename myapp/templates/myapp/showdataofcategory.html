@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="section-title mt-5">
+    <h2>Projects</h2>
+    <p>Projects in {{ category.name }}</p>
+  </div>
+</div><div class="row"></div>
+{% for project in projects %}
+  <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" style="width: auto;">
+    <div class="icon-box">
+      <img src="../../../static/img/team-1.jpg" style="height: 200px;">
+      <div class="icon"><i class="bx bxl-dribbble"></i></div>
+      <h4><a href="">{{ project.title }} </a></h4>
+      <p>Start Time: {{ project.start_time }}</p>
+    </div>
+   {% endfor %} </div>
+</div> 
+  </ul>
+  <pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+  </pre>
+{% endblock %}

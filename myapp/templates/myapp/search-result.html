@@ -1,10 +1,31 @@
 {% extends "base.html" %}
 {% load static %}
-
-{% block project_type %}
-Projects related to your search : <br />
-{% endblock project_type %}
-
-{% block extra_content_title %}
-Tags related to your search : <br />
-{% endblock extra_content_title %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahmoud Amr</title>
+</head>
+<body>
+    {% block content %}
+    <h1>Search Results</h1>
+    <h2>Projects</h2>
+    <ul>
+        {% for project in projects %}
+            <li>{{ project.title }}</li>
+        {% empty %}
+            <li>No projects found.</li>
+        {% endfor %}
+    </ul>
+    <h2>Searched Tags</h2>
+    <ul>
+        {% for tag in searched_tags %}
+            <li>{{ tag.name }}</li>
+        {% empty %}
+            <li>No tags found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+    
+</body>
+</html>

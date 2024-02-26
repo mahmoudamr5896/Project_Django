@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,11 +7,18 @@
     <title>Add Comment</title>
 </head>
 <body>
+{% block content %}
+
     <h1>Add Comment</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Add Comment</button>
     </form>
+
+
+{% endblock %}
+
+
 </body>
 </html>
