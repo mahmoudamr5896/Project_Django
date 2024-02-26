@@ -4,6 +4,7 @@ from myapp.models import Category, CommentReport, Donation, Picture, Project, Co
 
 
 # Register your models here.
+admin.site.register(Category)
 admin.site.register(Project)
 admin.site.register(Picture)
 admin.site.register(Report)
