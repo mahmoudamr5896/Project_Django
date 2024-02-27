@@ -29,10 +29,9 @@ def index(request):
     
     categories = Category.objects.all()
     highest_rated_projects = Project.objects.order_by('-rating__value')[:5]
-
     latest_projects = Project.objects.order_by('-start_time')[:5]
-
     latest_featured_projects = FeaturedProject.objects.order_by('-id')[:5]
+    print(latest_featured_projects)
 
     return render(request, 'myapp/home.html', {
         'categories':categories,
@@ -219,17 +218,20 @@ def index(request):
 #         }
 #     return render(request, "myapp/search-result.html", context)
 
+import re
 
 def search(request):
     context = {}
     search_query = request.GET.get('search')
     print(search_query)
-    if search_query and search_query.strip():
-        projects = Project.objects.filter(
-            Q(title=search_query) | Q(tags=search_query)
-        ).distinct()
-        searched_tags = Tag.objects.filter(name=search_query)
+    if search_query:
+        projects= Project.objects.filter(title=search_query)
+        for search_query in projects:
+            print(search_query.title)
 
+        searched_tags =Tag.objects.filter()
+        print(projects)
+        print(searched_tags)
         context = {
             'search_query': search_query,
             'projects': projects,
