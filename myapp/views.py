@@ -278,7 +278,8 @@ def project_list(request):
     return render(request, 'myapp/project_list.html', {'projects': projects})
 
 def project_detail(request, project_id):
-    project = Project.objects.get(id=project_id)
+    # project = Project.objects.get(id=project_id)
+    project = get_object_or_404(Project, id=project_id)
     comments = Comment.objects.filter(project=project)
     donations = Donation.objects.filter(project=project)
     reports = Report.objects.filter(project=project)
@@ -290,6 +291,14 @@ def project_detail(request, project_id):
 
     if request.method == 'POST':
         donation_form = DonationForm(request.POST)
+        rating_form = RatingForm(request.POST)
+        if rating_form.is_valid():
+            rating = rating_form.save(commit=False)
+            rating.project = project
+            rating.user = request.user
+            rating.save()
+            # Redirect to the same page after saving the rating
+            return redirect('project-detail', project_id=project_id)
         if donation_form.is_valid():
             donation = donation_form.save(commit=False)
             donation.project = project
@@ -298,6 +307,7 @@ def project_detail(request, project_id):
             return redirect('project-detail', project_id=project_id)
     else:
         donation_form = DonationForm()
+        rating_form = RatingForm()
 
     return render(request, 'myapp/project_detail.html', {'project': project, 'comments': comments, 'donations': donations, 'reports': reports, 'ratings': ratings, 'rating_form': rating_form, 'donation_form': donation_form, 'average_rating': average_rating})
 
