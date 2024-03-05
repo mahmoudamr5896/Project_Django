@@ -15,7 +15,7 @@ from django.db.models import Q
 # def index(request):
     # return HttpResponse("Happy Day Mahmoud")
     # return render(request, 'myapp/home.html')
-#__________________________________________________________________________________________________________________
+#_________________________________________________ _________________________________________________________________
 NULL={}
 def getUser(request):
         user = _register_task.objects.get(id=request.session['user_id'])
@@ -268,7 +268,7 @@ def create_project(request):
                 for tag_name in tags_list:
                     tag, created = Tag.objects.get_or_create(name=tag_name)
                     project.tags.add(tag)
-            return redirect('project-list')
+            return redirect('project_list')
     else:
         form = ProjectForm()
     return render(request, 'myapp/create_project.html', {'form': form})
