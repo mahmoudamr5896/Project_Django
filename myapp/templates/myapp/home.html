@@ -1,17 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
-
-
-          {% block Cat %}
-          
+          {% block Cat %} 
           <ul>
             {% for cat in categories %}
             <li><a href="{% url 'category_projects' cat.id %}" class="text-dark">{{ cat.name }}</a></li>
             {% endfor %}
           </ul>
           {% endblock %}
-
-
 {% block content %}
 <section id="hero" class="d-flex align-items-center justify-content-center">
  <div class="container" data-aos="fade-up">

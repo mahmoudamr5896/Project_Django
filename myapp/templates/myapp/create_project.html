@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 {% extends "base.html" %}
 {% load static %}
 
-=======
-{% comment %} {% include "base.html" %} {% endcomment %}
->>>>>>> origin/mai
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,7 +68,6 @@
 </head>
 {% block 'Section' %}
 <body>
-<<<<<<< HEAD
 
     <h1>Create New Project</h1>
     <form method="post" enctype="multipart/form-data">
@@ -83,27 +78,6 @@
 
     <!-- Include JS for file upload library -->
     <script src="path/to/file/upload/library.js"></script>
-=======
-    <div class="container">
-        <h1>Create New Project</h1>
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            <label for="id_title">Title:</label>
-            {{ form.title }}
-            <label for="id_details">Details:</label>
-            {{ form.details }}
-            <label for="id_category">Category:</label>
-            {{ form.category }}
-            <label for="id_total_target">Total Target:</label>
-            {{ form.total_target }}
-            <label for="id_start_time">Start Time:</label>
-            {{ form.start_time }}
-            <label for="id_end_time">End Time:</label>
-            {{ form.end_time }}
-            <button type="submit">Create Project</button>
-        </form>
-    </div>
->>>>>>> origin/mai
 </body>
 
 {% endblock %}
