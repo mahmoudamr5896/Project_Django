@@ -8,12 +8,8 @@ class ProjectForm(forms.ModelForm):
     
     class Meta:
         model = Project
-<<<<<<< HEAD
         fields = ['title', 'details', 'tags', 'category', 'total_target', 'start_time', 'end_time']
 
-=======
-        fields = ['title', 'details', 'category', 'total_target', 'start_time', 'end_time','images']
->>>>>>> origin/pro
         
 
 class CommentForm(forms.ModelForm):

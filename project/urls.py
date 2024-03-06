@@ -38,6 +38,7 @@ urlpatterns = [
     path('<int:project_id>/comment/', add_comment, name='add-comment'),
     path('team/',team,name='team'),
     path('category/<int:category_id>/', category_projects, name='category_projects'),
+    path('project_list/', views.project_list, name='project_list'),
     path('report-project/<int:project_id>/', views.report_project, name='report-project'),
     path('report-comment/<int:comment_id>/<int:project_id>/', views.report_comment, name='report-comment'),
 
