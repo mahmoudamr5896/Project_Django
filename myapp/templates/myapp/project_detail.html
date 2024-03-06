@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ project.title }}</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        p {
+            color: #666;
+        }
+        .container h2 {
+            color: #444;
+            margin-top: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .container a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #4caf50;
+            text-decoration: none;
+        }
+        .container form {
+            margin-top: 20px;
+        }
+        .container button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .container button:hover {
+            background-color: #45a049;
+        }
+            </style>
+</head>
+<body>
+    {% block content %}
+
+    
+    
+    <div class="container">
+        <h1>{{ project.title }}</h1>
+        <h2>Overall Average Rating: {{ average_rating|default:"No ratings yet" }} %</h2>
+    
+    <p>{{ project.details }}</p>
+    <p>Category: {{ project.category }}</p>
+    <p>Total Target: {{ project.total_target }}</p>
+    <p>Start Time: {{ project.start_time }}</p>
+    <p>End Time: {{ project.end_time }}</p>
+    
+</div>
+<div class="container">
+        <h2>Comments</h2>
+        <ul>
+            {% for comment in comments %}
+                <li class="comment">{{ comment.content }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'add-comment' project.id %}" class="action-button">Add Comment</a>
+    </div>
+    
+    <div class="container">
+        <h2>Donations</h2>
+        <ul>
+            {% for donation in donations %}
+                <li>{{ donation.amount }}</li>
+            {% endfor %}
+        </ul>
+        <form method="post" class="donation-form">
+            {% csrf_token %}
+            {{ donation_form.as_p }}
+            <button type="submit" class="action-button">Make Donation</button>
+        </form>
+    </div>
+    
+    <div class="container">
+        <h2>Reports</h2>
+        <ul>
+            {% for report in reports %}
+                <li>{{ report.reason }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    
+    <div class="container">
+        <h2>Ratings</h2>
+        <ul>
+            {% for rating in ratings %}
+                <li>{{ rating.value }}</li>
+            {% endfor %}
+        </ul>
+        <form method="post" class="rating-form">
+            {% csrf_token %}
+            {{ rating_form.as_p }}
+            <button type="submit" class="action-button">Rate This Project</button>
+        </form>
+    </div>
+    
+    <h3>Similar Projects:</h3>
+    <ul>
+        {% for similar_project in similar_projects %}
+            <li>{{ similar_project.title }}</li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
+</body>
+</html>

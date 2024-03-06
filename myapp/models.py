@@ -1,38 +1,82 @@
+
 from django.db import models
-from django.core.validators import RegexValidator
-from django.utils.translation import gettext_lazy as _
+from users.models import User
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    def __str__(self):
+        return self.name
 
 
-class Myuser(models.Model):
-    fname = models.CharField(max_length=20)
-    lname = models.CharField(max_length=20)
-    email = models.EmailField()
-    password = models.CharField(max_length=20)
-    conf_password = models.CharField(max_length=20)
-    phone = models.CharField(max_length=20)
-    profile_pic = models.ImageField(null=True, blank=True)
+class Tag(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    
+class Project(models.Model):
+    title = models.CharField(max_length=200)
+    details = models.TextField()
+    tags = models.ManyToManyField(Tag)  # Many-to-many relationship with Tag model
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    total_target = models.DecimalField(max_digits=10, decimal_places=2)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    images=models.ImageField(blank=True)
+      
+class SimilarProject(models.Model):
+    base_project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='base_project')
+    similar_project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='similar_project')
 
-    fname_regex = RegexValidator(
-        regex=r'^.+$',
-        message=_('First name must be a non-empty string'),
-    )
+class Picture(models.Model):
+    project = models.ForeignKey(Project, default=None, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='project_images/')
+    def __str__(self):
+        return Project.title 
 
-    lname_regex = RegexValidator(
-        regex=r'^.+$',
-        message=_('Last name must be a non-empty string'),
-    )
+class Comment(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField()
+    parent_comment = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True)
+    
 
-    email_regex = RegexValidator(
-        regex=r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b',
-        message=_('Please enter a valid email'),
-    )
+class Donation(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
 
-    password_regex = RegexValidator(
-        regex="^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",
-        message=_('Password should contain capital and small letters and number and special character'),
-    )
+class Report(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reason = models.TextField()
+    
+class ProjectReport(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reason = models.TextField()
 
-    phone_regex = RegexValidator(
-        regex=r'^01\d{9}$',
-        message=_('Please enter a valid phone number'),
-    )
+class CommentReport(models.Model):
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    reason = models.TextField()
+
+class Rating(models.Model):
+    RATING_CHOICES = [
+        (1, '1 star'),
+        (2, '2 stars'),
+        (3, '3 stars'),
+        (4, '4 stars'),
+        (5, '5 stars'),
+    ]
+    
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    value = models.IntegerField(choices=RATING_CHOICES)
+
+
+class FeaturedProject(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    # Add other fields as needed
+
+
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    rate = models.DecimalField(max_digits=5, decimal_places=2)

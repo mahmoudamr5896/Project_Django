@@ -1,0 +1,11 @@
+- Homepage should contains the following:
+- A slider to show the highest five rated running projects to encourage  users to donate(rate)[DONE]
+
+- List of the latest 5 projects(id)[DONE]
+
+- List of latest 5 featured projects (which are selected by the admin)[DONE]
+
+- A list of the categories. User can open each category to view its
+projects(category)[DONE]
+``
+- Search bar that enables users to search projects by title or tag [DONE]

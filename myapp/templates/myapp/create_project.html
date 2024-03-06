@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% include 'header.html'%}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Create New Project</title>
+    <!-- Include CSS and JS for file upload library -->
+    <link rel="stylesheet" href="../../../static/Css/form.css">
+</head>
+<body>
+
+    <h1>Create New Project</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create Project</button>
+    </form>
+    </div>
+
+    <!-- Include JS for file upload library -->
+    <script src="path/to/file/upload/library.js"></script>
+</body>
+</html>
+{% include 'footer.html'%}
+
+

@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mahmoud Amr</title>
+</head>
+<body>
+    {% block content %}
+    <div class="section-title mt-5">
+        <h2>Projects</h2>
+        <p>Search Results</p>
+      </div>
+    <ul>
+        {% for project in projects %}
+            <li>{{ project.title }}</li>
+        {% empty %}
+            <li>No projects found.</li>
+        {% endfor %}
+    </ul>
+    <div class="section-title mt-5">
+        <h2>Tags</h2>
+        <p>Searched Tags</p>
+      </div>
+    <ul>
+        {% for tag in searched_tags %}
+            <li>{{ tag.name }}</li>
+        {% empty %}
+            <li>No tags found.</li>
+        {% endfor %}
+    </ul>    <pre>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </pre>
+{% endblock %}
+
+</body>
+</html>

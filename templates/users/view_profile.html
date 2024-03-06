@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+</head>
+<body>
+    <h1>User Profile</h1>
+
+    <h2>Welcome, {{ user.first_name }} {{ user.last_name }}</h2>
+
+    <h3>Profile Information:</h3>
+    <ul>
+        <li>Email: {{ user.email }}</li>
+        <li>Mobile: {{ user.mobile }}</li>
+        <li>Birthdate: {{ profile.birthdate }}</li>
+        <li>Facebook Profile: {{ profile.facebook_profile }}</li>
+        <li>Country: {{ profile.country }}</li>
+    </ul>
+
+    <h3>Projects:</h3>
+    <ul>
+        {% for project in projects %}
+            <li>{{ project.name }} - {{ project.description }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Donations:</h3>
+    <ul>
+        {% for donation in donations %}
+            <li>{{ donation.amount }} - {{ donation.date }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'edit_profile' %}">Edit Profile</a>
+    <form action="{% url 'delete_user' %}" method="post" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+        {% csrf_token %}
+        <input type="submit" value="Delete Account">
+    </form>
+</body>
+</html>

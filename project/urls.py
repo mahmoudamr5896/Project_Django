@@ -16,21 +16,28 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
-from myapp.views import index ,login, signin, signout ,signup,profile
-from django.conf.urls.static import static
-from django.conf import settings
+from django.urls import path,include
+from myapp.views import add_comment, category_projects, create_project, index ,login, project_detail, project_list ,sighup,search, team,profile
+from users import views
+
 
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("home/",index ,name='index'),
+    path("",index ,name='index'),
     path("login/",login ,name='login'),
-    path("signup/",signup ,name='signup'),
-    path("signin/",signin ,name='signin'),
-    path("signout/",signout ,name='signout'),
-    path("profile/",profile ,name='profile'),
+    path("sighup/",sighup ,name='sighup'),
+    path('search-result/', search, name='search-result'),
+    path('create/',create_project, name='create'),
+    path('list/', project_list, name='list'),
+    path('<int:project_id>/', project_detail, name='project-detail'),
+    path('<int:project_id>/comment/', add_comment, name='add-comment'),
+    path('team/',team,name='team'),
+    path('category/<int:category_id>/', category_projects, name='category_projects'),
+     path('user/', include('allauth.urls')),
+      path('profile/', views.view_profile, name='view_profile'),
+      path('profile/', profile, name='view_profile'),
+    path('profile/edit/', views.edit_profile, name='edit_profile'),
+    path('profile/delete/', views.delete_user, name='delete_user'),
+
 ]
-
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
