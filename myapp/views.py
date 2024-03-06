@@ -35,7 +35,9 @@ def index(request):
         user = NULL 
     
     categories = Category.objects.all()
-    highest_rated_projects = Project.objects.order_by('-rating__value')[:5]
+    highest_rated_projects = Project.objects.annotate(rate=Avg('rating__value')).order_by('-rate')[:5]
+
+    # highest_rated_projects = Project.objects.order_by('-rating__value')[:5]
     latest_projects = Project.objects.order_by('-start_time')[:5]
     latest_featured_projects = FeaturedProject.objects.order_by('-id')[:5]
     print(latest_featured_projects)
@@ -48,6 +50,33 @@ def index(request):
     })
 
 
+<<<<<<< HEAD
+=======
+from django import template
+
+register = template.Library()
+
+@register.filter(name='rating_stars')
+def rating_stars(rating):
+    full_stars = int(rating)
+    half_star = 1 if rating - full_stars >= 0.5 else 0
+    empty_stars = 5 - full_stars - half_star
+
+    return {
+        'full_stars': range(full_stars),
+        'half_star': half_star,
+        'empty_stars': range(empty_stars)
+    }
+# Handel Search 
+# def search(request):
+#     if 'user_id' not in request.session:
+#         user = NULL
+#     else:
+#         user = getUser(request)
+#     context = {}
+#     try:
+#         search_post = request.GET.get('search')
+>>>>>>> origin/Ezat
 
 
 def search(request):
