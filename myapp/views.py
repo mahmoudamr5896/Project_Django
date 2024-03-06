@@ -15,9 +15,19 @@ from .forms import CommentReportForm, ProjectForm, CommentForm, DonationForm, Pr
 from django.db.models import Avg
 from django.template.defaultfilters import slugify
 from django.db.models import Q
+<<<<<<< HEAD
 import re
 from django.db.models import Count
 ##########################################################################################################
+=======
+
+# Create your views here.
+#  Mahmoud Amr Working In home :
+# def index(request):
+    # return HttpResponse("Happy Day Mahmoud")
+    # return render(request, 'myapp/home.html')
+#_________________________________________________ _________________________________________________________________
+>>>>>>> origin/pro
 NULL={}
 
 
@@ -98,7 +108,7 @@ def create_project(request):
                 for tag_name in tags_list:
                     tag, created = Tag.objects.get_or_create(name=tag_name)
                     project.tags.add(tag)
-            return redirect('project-list')
+            return redirect('project_list')
     else:
         form = ProjectForm()
     return render(request, 'myapp/create_project.html', {'form': form})
@@ -118,6 +128,10 @@ def tagged(request, tag_id):
 
 
 def project_detail(request, project_id):
+<<<<<<< HEAD
+=======
+    # project = Project.objects.get(id=project_id)
+>>>>>>> origin/pro
     project = get_object_or_404(Project, id=project_id)
     comments = Comment.objects.filter(project=project)
     donations = Donation.objects.filter(project=project)
@@ -151,6 +165,10 @@ def project_detail(request, project_id):
             rating.project = project
             rating.user = request.user
             rating.save()
+<<<<<<< HEAD
+=======
+            # Redirect to the same page after saving the rating
+>>>>>>> origin/pro
             return redirect('project-detail', project_id=project_id)
         if donation_form.is_valid():
             donation = donation_form.save(commit=False)

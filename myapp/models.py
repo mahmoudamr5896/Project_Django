@@ -22,16 +22,17 @@ class Project(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    images=models.ImageField(blank=True)
       
 class SimilarProject(models.Model):
     base_project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='base_project')
     similar_project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='similar_project')
 
 class Picture(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, default=None, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='project_images/')
     def __str__(self):
-        return self.image
+        return Project.title 
 
 class Comment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
