@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 {% extends "base.html" %}
 
 {% include 'header.html'%}
 {% load static %}
 
+=======
+{% include 'header.html'%}
+>>>>>>> origin/pro
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,8 +17,23 @@
     <link rel="stylesheet" href="../../../static/Css/form.css">
 </head>
 <body>
+<<<<<<< HEAD
 
     <h1>Create New Project</h1>
+=======
+    <div class="container col-7 justify-content-center">
+    <h1 style="background-color: whitesmoke;
+    font-family: Century Gothic;
+    font-weight: bold;
+    padding: 20px; 
+    border: 2px solid black; 
+    border-radius: 10px; 
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;">Create Project</h1>
+
+>>>>>>> origin/pro
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}

@@ -8,4 +8,34 @@
 - A list of the categories. User can open each category to view its
 projects(category)[DONE]
 ``
+<<<<<<< HEAD
 - Search bar that enables users to search projects by title or tag [DONE]
+=======
+- Search bar that enables users to search projects by title or tag [DONE]
+
+   <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
+    <h2>Highest Rated Projects</h2>
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        {% for project in highest_rated_projects %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+          <img src="../../../static/img/team-1.jpg" class="d-block w-100" alt="{{ project.title }}" height='400px'>
+          <div class="carousel-caption d-none d-md-block">
+            <h5>{{ project.title }}</h5>
+            <p>{{ project.Details }}</p>
+            <a class="btn-Secondary">See More</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleSlidesOnly" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+    </div>
+>>>>>>> origin/pro

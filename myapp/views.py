@@ -5,6 +5,10 @@ from urllib import request
 from django.db.models import Avg, Sum
 from django.shortcuts import get_object_or_404, render ,redirect
 from django.http import HttpResponse
+from .models import FeaturedProject, Project, Comment, Donation, Report, Rating,Tag ,Category
+from .forms import ProjectForm, CommentForm, DonationForm, ReportForm, RatingForm
+from django.db.models import Avg
+from django.db.models import Q
 
 from users.models import User
 from .models import FeaturedProject, Project, Comment, Donation, Report, Rating,Tag ,Category
@@ -360,6 +364,7 @@ def add_comment(request, project_id):
 
 
 
+<<<<<<< HEAD
 @login_required
 def profile(request):
     user_email = request.session.get("email")
@@ -368,6 +373,11 @@ def profile(request):
     return render(request, 'myapp/profile.html', context)
 
 # modifed 
+=======
+
+
+#  get user from session
+>>>>>>> origin/pro
 def login(request):
     return redirect(reverse('profile'))
 
