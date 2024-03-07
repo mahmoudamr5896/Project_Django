@@ -38,8 +38,18 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "myapp",
+<<<<<<< HEAD
     'taggit',
+=======
+    "users",
+    "django.contrib.sites",
+    "allauth",
+    "allauth.account",
+    "allauth.socialaccount",
+>>>>>>> origin/ahmedreda
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -49,14 +59,16 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
 import os
-ROOT_URLCONF = "project.urls"
 
+ROOT_URLCONF = "project.urls"
+AUTH_USER_MODEL = "users.User"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [os.path.join(BASE_DIR,'templates')],
+        "DIRS": [os.path.join(BASE_DIR, "templates")],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -118,11 +130,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+<<<<<<< HEAD
 STATIC_FILES_DIRS=[
     os.path.join(BASE_DIR,'static')
 ]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+=======
+STATIC_FILES_DIRS = [os.path.join(BASE_DIR, "static")]
+>>>>>>> origin/ahmedreda
 # settings.py
 STATICFILES_DIRS = [
     BASE_DIR / "static",
@@ -131,3 +147,36 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+# settings.py
+
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+SITE_ID = 1  # Or set it to your Site ID if you have multiple sites
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1  # Activation link expiration time (1 day)
+
+LOGIN_REDIRECT_URL = "/"
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_HOST_USER = "ae4755740@gmail.com"
+EMAIL_HOST_PASSWORD = "flmbjweippzhouft"
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+ACCOUNT_LOGOUT_REDIRECT_URL = "/"
+LOGIN_URL = "/login/"
+# djauth/settings.py
+LOGIN_REDIRECT_URL = "/user/success"
+LOGOUT_REDIRECT_URL = "/"
+
+
+ACCOUNT_FORMS = {
+    "signup": "users.forms.CustomSignupForm",
+    "signin":"users.forms.CustomLoginForm"
+}
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'

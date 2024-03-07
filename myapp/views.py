@@ -17,9 +17,28 @@ from .forms import  CommentReportForm, ProjectForm, CommentForm, DonationForm, P
 from django.db.models import Avg
 from django.template.defaultfilters import slugify
 from django.db.models import Q
+<<<<<<< HEAD
 import re
 from django.db.models import Count
 ##########################################################################################################
+=======
+
+from users.models import User
+from .models import FeaturedProject, Project, Comment, Donation, Report, Rating,Tag ,Category
+from .forms import ProjectForm, CommentForm, DonationForm, ReportForm, RatingForm
+from django.db.models import Avg
+from django.db.models import Q
+from allauth.account.forms import LoginForm
+from django.urls import reverse
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+# Create your views here.
+#  Mahmoud Amr Working In home :
+# def index(request):
+    # return HttpResponse("Happy Day Mahmoud")
+    # return render(request, 'myapp/home.html')
+#_________________________________________________ _________________________________________________________________
+>>>>>>> origin/ahmedreda
 NULL={}
 
 
@@ -257,11 +276,18 @@ def report_comment(request, comment_id, project_id):
 
 
 
+@login_required
+def profile(request):
+    user_email = request.session.get("email")
+    user_info = User.objects.get(email=user_email)
+    context = {'user_info': user_info}
+    return render(request, 'myapp/profile.html', context)
 
-
-#  get user from session
+# modifed 
 def login(request):
-    return render(request, 'myapp/sighnup.html')
+    return redirect(reverse('profile'))
+
+
 
 def sighup(request):
     return render(request, 'myapp/sighnup.html')
