@@ -20,28 +20,6 @@
         margin-top: 20px;
         margin-bottom: 20px;">Create Project</h1>
 
-<<<<<<< HEAD
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-    
-        {% if form.errors %}
-            <div class="alert alert-danger">
-                <strong>Error!</strong> Please correct the following errors:
-                <ul>
-                {% for field, error_list in form.errors.items %}
-                    {% for error in error_list %}
-                        <li>{{ field }}: {{ error }}</li>
-                    {% endfor %}
-                {% endfor %}
-                </ul>
-            </div>
-        {% endif %}
-    
-        <button type="submit">Create Project</button>
-    </form>
-    
-=======
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
@@ -52,7 +30,6 @@
             <button type="submit">Create Project</button>
         </form>
         
->>>>>>> origin/b2
     </div>
 
     <!-- Include JS for file upload library -->

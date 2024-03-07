@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 {% include 'header.html'%}
 <!DOCTYPE html>
 <html lang="en">
@@ -13,14 +12,7 @@
             margin: 0;
             padding: 0;
         } 
-       {% comment %} .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }  {% endcomment %}
+    
         h1 {
             color: #333;
             text-align: center;
@@ -49,17 +41,7 @@
         .container form {
             margin-top: 20px;
         }
-        {% comment %} .container button {
-            background-color: #4caf50;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        } {% endcomment %}
-        {% comment %} .container button:hover {
-            background-color: #45a049;
-        } {% endcomment %}
+       
 
         .container1 {
             border: 3px solid #ccc;
@@ -93,15 +75,11 @@
                 <div class="container col-5 d-flex justify-content-center">
         <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="../../../static/img/team-1.jpg" class="d-block w-100" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src="../../../static/img/team-1.jpg" class="d-block w-100" alt="...">
-              </div>
-              <div class="carousel-item">
-                <img src="../../../static/img/team-1.jpg" class="d-block w-100" alt="...">
-              </div>
+                {% for image in project.picture_set.all %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}" style="height: 300px;">
+                    <img src="{{ image.image.url }}" class="d-block w-100"  alt="Project Image">
+                </div>
+                {% endfor %}
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -339,119 +317,3 @@
 </body>
 </html>
 
-
-=======
-{% extends 'base.html' %}
-
-{% block content %}
-<div class="container">
-    <h1>{{ project.title }}</h1>
-    
-
-    <div id="projectCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-            {% for image in project.picture_set.all %}
-                <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                    <img src="{{ image.image.url }}" class="d-block w-100" alt="Project Image">
-                </div>
-            {% endfor %}
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
-
-    <h2>Overall Average Rating: {{ average_rating|default:"No ratings yet" }} %</h2>
-    <p>{{ project.details }}</p>
-    <p>Category: {{ project.category }}</p>
-    <p>Total Target: {{ project.total_target }}</p>
-    <p>Start Time: {{ project.start_time }}</p>
-    <p>End Time: {{ project.end_time }}</p>
-
-  
-    
-    <div class="container">
-        <h2>Comments</h2>
-        <ul>
-            {% for comment in comments %}
-                <li class="comment">{{ comment.content }}</li>
-            {% endfor %}
-        </ul>
-        <a href="{% url 'add-comment' project.id %}" class="action-button">Add Comment</a>
-    </div>
-    
-    <div class="container">
-        <h2>Donations</h2>
-        <ul>
-            {% for donation in donations %}
-                <li>{{ donation.amount }}</li>
-            {% endfor %}
-        </ul>
-        <form method="post" class="donation-form">
-            {% csrf_token %}
-            {{ donation_form.as_p }}
-            <button type="submit" class="action-button">Make Donation</button>
-        </form>
-    </div>
-    
-    <div class="container">
-        <h2>Reports</h2>
-        <ul>
-            {% for report in reports %}
-                <li>{{ report.reason }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-    
-    <div class="container">
-        <h2>Ratings</h2>
-        <ul>
-            {% for rating in ratings %}
-                <li>{{ rating.value }}</li>
-            {% endfor %}
-        </ul>
-        <form method="post" class="rating-form">
-            {% csrf_token %}
-            {{ rating_form.as_p }}
-            <button type="submit" class="action-button">Rate This Project</button>
-        </form>
-    </div>
-    
-    <h3>Similar Projects:</h3>
-    <ul>
-        {% for similar_project in similar_projects %}
-            <li>{{ similar_project.title }}</li>
-        {% endfor %}
-    </ul>
-</div>
-{% endblock %}
-
-{% block scripts %}
-<!-- Bootstrap Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-5e2b9jjcOwKUsGPEFjXeRn5zkp1F9rUlVkfywu0Bnq3PLKLYgYAv6aiSvm6P1e8r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-8KBctz4umXQ4DQj3M4sTEMTs9mOAXuoTrAZ+1BSKAN+M7FlFN/b3oqTG2HS9BSUG" crossorigin="anonymous"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Activate the carousel
-        var carousel = new bootstrap.Carousel(document.querySelector('#projectCarousel'), {
-            interval: false // Disable auto sliding
-        });
-        
-        // Optional: Add event listeners for previous and next buttons
-        document.querySelector('#prevButton').addEventListener('click', function() {
-            carousel.prev();
-        });
-        
-        document.querySelector('#nextButton').addEventListener('click', function() {
-            carousel.next();
-        });
-    });
-</script>
-{% endblock %}
-
->>>>>>> origin/b2
