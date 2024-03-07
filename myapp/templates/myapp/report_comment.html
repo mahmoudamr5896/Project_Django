@@ -1,11 +1,14 @@
+{% include 'header.html'%}
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Report Comment</title>
-    
+    <link rel="stylesheet" href="../../../static/Css/form.css">
+
 </head>
 <body>
-    <h2>Report Comment</h2>
+   
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
@@ -13,3 +16,5 @@
     </form>
 </body>
 </html>
+{% include 'footer.html'%}
+
