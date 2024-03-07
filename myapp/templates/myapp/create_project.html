@@ -1,8 +1,7 @@
-{% include 'header.html'%}
+{% include 'header.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <title>Create New Project</title>
     <!-- Include CSS and JS for file upload library -->
@@ -10,17 +9,18 @@
 </head>
 <body>
     <div class="container col-7 justify-content-center">
-    <h1 style="background-color: whitesmoke;
-    font-family: Century Gothic;
-    font-weight: bold;
-    padding: 20px; 
-    border: 2px solid black; 
-    border-radius: 10px; 
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;">Create Project</h1>
+        <h1 style="background-color: whitesmoke;
+        font-family: Century Gothic;
+        font-weight: bold;
+        padding: 20px; 
+        border: 2px solid black; 
+        border-radius: 10px; 
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;">Create Project</h1>
 
+<<<<<<< HEAD
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
@@ -41,12 +41,22 @@
         <button type="submit">Create Project</button>
     </form>
     
+=======
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {{ formset.management_form }}
+            {% for subform in formset %}
+                {{ subform.as_p }}
+            {% endfor %}
+            <button type="submit">Create Project</button>
+        </form>
+        
+>>>>>>> origin/b2
     </div>
 
     <!-- Include JS for file upload library -->
-    <script src="path/to/file/upload/library.js"></script>
+    {% comment %} <script src="path/to/file/upload/library.js"></script> {% endcomment %}
 </body>
 </html>
-{% include 'footer.html'%}
-
-
+{% include 'footer.html' %}

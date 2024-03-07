@@ -1,6 +1,8 @@
 ######################################libraries#########################################################
 from asyncio import _register_task
 from django.http import HttpResponseRedirect
+from django.forms import inlineformset_factory
+
 from django.contrib import messages
 from django.urls import reverse
 from taggit.models import Tag
@@ -10,8 +12,8 @@ from urllib import request
 from django.db.models import Avg, Sum
 from django.shortcuts import get_object_or_404, render ,redirect
 from django.http import HttpResponse
-from .models import FeaturedProject, Project, Comment, Donation, Report, Rating ,Category
-from .forms import CommentReportForm, ProjectForm, CommentForm, DonationForm, ProjectReportForm, ReportForm, RatingForm
+from .models import FeaturedProject, Picture, Project, Comment, Donation, Report, Rating ,Category
+from .forms import  CommentReportForm, ProjectForm, CommentForm, DonationForm, ProjectReportForm, ReportForm, RatingForm
 from django.db.models import Avg
 from django.template.defaultfilters import slugify
 from django.db.models import Q
@@ -30,25 +32,22 @@ def getUser(request):
 
 def index(request):
     if 'user_id' in request.session:
-        user = getUser(request)
+        user = _register_task.objects.get(id=request.session['user_id'])
     else:
-        user = NULL 
+        user = None 
     
     categories = Category.objects.all()
     highest_rated_projects = Project.objects.annotate(rate=Avg('rating__value')).order_by('-rate')[:5]
-
-    # highest_rated_projects = Project.objects.order_by('-rating__value')[:5]
     latest_projects = Project.objects.order_by('-start_time')[:5]
     latest_featured_projects = FeaturedProject.objects.order_by('-id')[:5]
-    print(latest_featured_projects)
 
     return render(request, 'myapp/home.html', {
-        'categories':categories,
+        'categories': categories,
         'highest_rated_projects': highest_rated_projects,
         'latest_projects': latest_projects,
         'latest_featured_projects': latest_featured_projects,
+        'user': user,
     })
-
 
 
 
@@ -84,15 +83,21 @@ def category_projects(request, category_id):
 #_________________________________________________________________________________________________#
 
     
+from .forms import ProjectForm, ImageForm  # Import the ImageFormSet
 
 def create_project(request):
+    ImageFormSet = inlineformset_factory(Project, Picture, form=ImageForm, extra=3)
+
     if request.method == 'POST':
         form = ProjectForm(request.POST)
-        if form.is_valid():
+        formset = ImageFormSet(request.POST, request.FILES)
+        if form.is_valid() and formset.is_valid():
             project = form.save(commit=False)
             project.creator = request.user
             project.save()
-            form.save_m2m()
+            formset.instance = project
+            formset.save()
+
             # Process tags
             tags_input = form.cleaned_data['tags']
             if tags_input:
@@ -103,7 +108,9 @@ def create_project(request):
             return redirect('project_list')
     else:
         form = ProjectForm()
-    return render(request, 'myapp/create_project.html', {'form': form})
+        formset = ImageFormSet()
+    return render(request, 'myapp/create_project.html', {'form': form, 'formset': formset})
+ # Pass formset to template
 
 def project_list(request):
     projects = Project.objects.all()
