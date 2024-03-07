@@ -32,7 +32,7 @@ class Picture(models.Model):
     project = models.ForeignKey(Project, default=None, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='project_images/')
     def __str__(self):
-        return Project.title 
+            return self.image.name
 
 class Comment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)

@@ -1,16 +1,24 @@
 # forms.py
 from django import forms
-from .models import CommentReport, Project, Comment, Donation, ProjectReport, Report, Rating
+from .models import CommentReport, Picture, Project, Comment, Donation, ProjectReport, Report, Rating
 
+
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Picture
+        fields = ['image']      
 
 class ProjectForm(forms.ModelForm):
+    ImageFormSet = forms.inlineformset_factory(Project, Picture, form=ImageForm, extra=3)
     tags = forms.CharField(label='Tags', required=False, help_text='Enter tags separated by commas')
     
     class Meta:
         model = Project
         fields = ['title', 'details', 'tags', 'category', 'total_target', 'start_time', 'end_time']
 
-        
+
+
+     
 
 class CommentForm(forms.ModelForm):
     class Meta:

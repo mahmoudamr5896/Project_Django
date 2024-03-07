@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from myapp.models import Category, CommentReport, Donation, Picture, Project, Tag ,Comment, ProjectReport, Rating, Report , FeaturedProject
+from myapp.models import Category ,CommentReport, Donation, Picture, Project, Tag ,Comment, ProjectReport, Rating, Report , FeaturedProject
 
 
 # Register your models here.
