@@ -2,11 +2,14 @@
 from django import forms
 from .models import CommentReport, Project, Comment, Donation, ProjectReport, Report, Rating
 
+
 class ProjectForm(forms.ModelForm):
-    tags = forms.CharField(max_length=200, required=False) 
+    tags = forms.CharField(label='Tags', required=False, help_text='Enter tags separated by commas')
+    
     class Meta:
         model = Project
-        fields = ['title', 'details', 'category', 'total_target', 'start_time', 'end_time','images']
+        fields = ['title', 'details', 'tags', 'category', 'total_target', 'start_time', 'end_time']
+
         
 
 class CommentForm(forms.ModelForm):
@@ -33,7 +36,7 @@ class ProjectReportForm(forms.ModelForm):
 class CommentReportForm(forms.ModelForm):
     class Meta:
         model = CommentReport
-        fields = ['reason']
+        fields = ['reason', 'details']
 
 class RatingForm(forms.ModelForm):
     class Meta:

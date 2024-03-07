@@ -1,0 +1,16 @@
+<!-- report_project.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Report Project</title>
+</head>
+<body>
+    <h2>Report Project</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Report</button>
+    </form>
+</body>
+</html>
