@@ -121,15 +121,10 @@ STATIC_URL = "static/"
 STATIC_FILES_DIRS=[
     os.path.join(BASE_DIR,'static')
 ]
-<<<<<<< HEAD
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-=======
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
->>>>>>> origin/b2
 # settings.py
 STATICFILES_DIRS = [
     BASE_DIR / "static",
