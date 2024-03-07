@@ -1,22 +1,29 @@
+######################################libraries#########################################################
 from asyncio import _register_task
+from django.http import HttpResponseRedirect
+from django.contrib import messages
+from django.urls import reverse
+from taggit.models import Tag
 from audioop import ratecv
 from unittest import loader
 from urllib import request
 from django.db.models import Avg, Sum
 from django.shortcuts import get_object_or_404, render ,redirect
 from django.http import HttpResponse
-from .models import FeaturedProject, Project, Comment, Donation, Report, Rating,Tag ,Category
-from .forms import ProjectForm, CommentForm, DonationForm, ReportForm, RatingForm
+from .models import FeaturedProject, Project, Comment, Donation, Report, Rating ,Category
+from .forms import CommentReportForm, ProjectForm, CommentForm, DonationForm, ProjectReportForm, ReportForm, RatingForm
 from django.db.models import Avg
+from django.template.defaultfilters import slugify
 from django.db.models import Q
-
-# Create your views here.
-#  Mahmoud Amr Working In home :
-# def index(request):
-    # return HttpResponse("Happy Day Mahmoud")
-    # return render(request, 'myapp/home.html')
-#_________________________________________________ _________________________________________________________________
+import re
+from django.db.models import Count
+##########################################################################################################
 NULL={}
+
+
+def team(request):
+    return render(request, 'myapp/ourTeam.html')
+
 def getUser(request):
         user = _register_task.objects.get(id=request.session['user_id'])
         return user
@@ -43,199 +50,7 @@ def index(request):
     })
 
 
-from django import template
 
-register = template.Library()
-
-@register.filter(name='rating_stars')
-def rating_stars(rating):
-    full_stars = int(rating)
-    half_star = 1 if rating - full_stars >= 0.5 else 0
-    empty_stars = 5 - full_stars - half_star
-
-    return {
-        'full_stars': range(full_stars),
-        'half_star': half_star,
-        'empty_stars': range(empty_stars)
-    }
-# Handel Search 
-# def search(request):
-#     if 'user_id' not in request.session:
-#         user = NULL
-#     else:
-#         user = getUser(request)
-#     context = {}
-#     try:
-#         search_post = request.GET.get('search')
-
-#         if len(search_post.strip()) > 0:
-#             projects = Project.objects.filter(title__icontains=search_post)
-#             searched_tags = Tag.objects.filter(name__icontains=search_post)
-#             donations = []
-#             progress_values = []
-#             images = []
-#             for project in projects:
-#                 donate = project.donation_set.all().aggregate(Sum("donation"))
-#                 total_donation = donate["donation__sum"] if donate["donation__sum"] else 0
-
-#                 progress_values.append(
-#                     total_donation * 100/project.total_target)
-#                 donations.append(total_donation)
-#                 images.append(project.image_set.all().first().images.url)
-
-#             context = {
-#                 'projects': projects, 
-#                 'tags': searched_tags, 
-#                 'images': images,
-#                 'donations': donations,
-#                 'progress_values': progress_values,
-#                 'user':user}
-
-#             if(len(projects) <= 0):
-#                 context.update(
-#                     {'title': 'No Projects Found for "'+search_post+'"'})
-#             if(len(searched_tags) <= 0):
-#                 context.update(
-#                     {'title_tags': 'No Tags Found for "'+search_post + '"'})
-#             return render(request, "myapp/search-result.html", context)
-#         else:
-#             return render(request, "myapp/home.html", context)
-
-#     except Project.DoesNotExist:
-#         html_template = loader.get_template('')
-#         return HttpResponse(html_template.render(context, request))
-
-
-# def search(request):
-#     if 'user_id' not in request.session:
-#         user = NULL
-#     else:
-#         user = getUser(request)
-#     context = {}
-#     try:
-#         search_post = request.GET.get('search')
-#         if len(search_post.strip()) > 0:
-#             projects = Project.objects.filter(title=search_post)
-#             searched_tags = Tag.objects.filter(name=search_post)
-
-#             donations = []
-#             progress_values = []
-#             images = []
-#             for project in projects:
-#                 donate = project.donation_set.all().aggregate(Sum("donation"))
-#                 total_donation = donate["donation__sum"] if donate["donation__sum"] else 0
-
-#                 progress_values.append(
-#                     total_donation * 100/project.total_target)
-#                 donations.append(total_donation)
-#                 images.append(project.image_set.all().first().images.url)
-
-#             context = {
-#                 'projects': projects, 
-#                 'tags': searched_tags, 
-#                 'images': images,
-#                 'donations': donations,
-#                 'progress_values': progress_values,
-#                 'user':user}
-
-#             if(len(projects) <= 0):
-#                 context.update(
-#                     {'title': 'No Projects Found for "'+search_post+'"'})
-#             if(len(searched_tags) <= 0):
-#                 context.update(
-#                     {'title_tags': 'No Tags Found for "'+search_post + '"'})
-
-#             return render(request, "home/search-result.html", context)
-#         else:
-#             return render(request, "home/index.html", context)
-
-#     except Project.DoesNotExist:
-#         html_template = loader.get_template('home/page-404.html')
-#         return HttpResponse(html_template.render(context, request))
-
-# def search(request):
-#     # if 'user_id' not in request.session:
-#     #     user = None
-#     # else:
-#     #     user = getUser(request)
-    
-#     context = {}
-#     try:
-#         search_post = request.GET.get('search')
-#         if search_post is not None and len(search_post.strip()) > 0:
-#             projects = Project.objects.filter(title=search_post)
-#             searched_tags = Tag.objects.filter(name=search_post)
-#             donations = []
-#             progress_values = []
-#             images = []
-#             for project in projects:
-#                 donate = project.donation_set.all().aggregate(Sum("donation"))
-#                 total_donation = donate["donation__sum"] if donate["donation__sum"] else 0
-
-#                 progress_values.append(
-#                     total_donation * 100/project.total_target)
-#                 donations.append(total_donation)
-#                 images.append(project.image_set.all().first().images.url)
-
-#             context = {
-#                 'projects': projects, 
-#                 'tags': searched_tags, 
-#                 'images': images,
-#                 'donations': donations,
-#                 'progress_values': progress_values,
-#                 }
-
-#             if(len(projects) <= 0):
-#                 context.update(
-#                     {'title': 'No Projects Found for "'+search_post+'"'})
-#             if(len(searched_tags) <= 0):
-#                 context.update(
-#                     {'title_tags': 'No Tags Found for "'+search_post + '"'})
-#             return render(request, "myapp/search-result.html", context)
-#         else:
-#             return render(request, "myapp/home.html", context)
-
-#     except Project.DoesNotExist:
-
-#         html_template = loader.get_template('home/page-404.html')
-#         return HttpResponse(html_template.render(context, request))
-
-
-
-# def search(request):
-#     context = {}
-#     search_query = request.GET.get('search')
-#     print(search_query)
-#     if search_query and search_query.strip():
-#         projects = Project.objects.filter(
-#             Q(title=search_query) | Q(tags=search_query)
-#         ).distinct()
-#         searched_tags = Tag.objects.filter(name=search_query)
-
-#         context = {
-#             'search_query': search_query,
-#             'projects': projects,
-#             'searched_tags': searched_tags,
-#         }
-#     return render(request, "myapp/search-result.html", context)
-# def search(request):
-#     context = {}
-#     search_query = request.GET.get('search')
-#     print(search_query)
-#     if search_query and search_query.strip():
-#         projects = Project.objects.filter(
-#             Q(title=search_query) | Q(tags=search_query)
-#         ).distinct()
-#         searched_tags = Tag.objects.filter(name=search_query)
-
-#         context = {
-#             'search_query': search_query,
-#             'projects': projects,
-#             'searched_tags': searched_tags,
-#         }
-#     return render(request, "myapp/search-result.html", context)
-
-import re
 
 def search(request):
     context = {}
@@ -266,9 +81,8 @@ def category_projects(request, category_id):
     categories = Category.objects.all()
     return render(request, 'myapp/showdataofcategory.html', {'projects': projects, 'categories': categories ,'category':category})
 
-#__________________________________________________________________________________#
-def team(request):
-    return render(request, 'myapp/ourTeam.html')
+#_________________________________________________________________________________________________#
+
     
 
 def create_project(request):
@@ -278,6 +92,7 @@ def create_project(request):
             project = form.save(commit=False)
             project.creator = request.user
             project.save()
+            form.save_m2m()
             # Process tags
             tags_input = form.cleaned_data['tags']
             if tags_input:
@@ -294,17 +109,41 @@ def project_list(request):
     projects = Project.objects.all()
     return render(request, 'myapp/project_list.html', {'projects': projects})
 
+def tagged(request, tag_id):
+    tag = get_object_or_404(Tag, id=tag_id)
+    projects = Project.objects.filter(tags=tag)
+    context = {
+        'tag': tag,
+        'projects': projects,
+    }
+    return render(request, 'myapp/home.html', context)
+
+
 def project_detail(request, project_id):
-    # project = Project.objects.get(id=project_id)
     project = get_object_or_404(Project, id=project_id)
     comments = Comment.objects.filter(project=project)
     donations = Donation.objects.filter(project=project)
     reports = Report.objects.filter(project=project)
     ratings = Rating.objects.filter(project=project)
+    tags = project.tags.all()
+    similar_projects = Project.objects.filter(tags__in=tags).exclude(id=project.id).distinct()[:5]
     rating_form = RatingForm()
-
-    # Calculate average rating
     average_rating = ratings.aggregate(Avg('value'))['value__avg']
+
+    # Calculate the number of reports for the project
+    report_count = reports.count()
+
+    if report_count >= 15 and report_count < 20:
+        # Display a warning message if the report count is close to 20
+        messages.warning(request, f"Your project has received {report_count} reports. If it reaches 20, it will be deleted.")
+
+    if report_count >= 20:
+        # Delete the project and show a success message
+        project.delete()
+        messages.success(request, "Your project has been deleted due to receiving more than 20 reports.")
+
+        # Redirect the user to a relevant page, such as the project list
+        return redirect('project-list')
 
     if request.method == 'POST':
         donation_form = DonationForm(request.POST)
@@ -314,7 +153,6 @@ def project_detail(request, project_id):
             rating.project = project
             rating.user = request.user
             rating.save()
-            # Redirect to the same page after saving the rating
             return redirect('project-detail', project_id=project_id)
         if donation_form.is_valid():
             donation = donation_form.save(commit=False)
@@ -326,9 +164,19 @@ def project_detail(request, project_id):
         donation_form = DonationForm()
         rating_form = RatingForm()
 
-    return render(request, 'myapp/project_detail.html', {'project': project, 'comments': comments, 'donations': donations, 'reports': reports, 'ratings': ratings, 'rating_form': rating_form, 'donation_form': donation_form, 'average_rating': average_rating})
-
-
+    return render(request, 'myapp/project_detail.html', {
+        'project': project,
+        'comments': comments,
+        'donations': donations,
+        'reports': reports,
+        'ratings': ratings,
+        'rating_form': rating_form,
+        'donation_form': donation_form,
+        'average_rating': average_rating,
+        'tags': tags,
+        'similar_projects': similar_projects,
+        'report_count': report_count,
+    })
 def add_comment(request, project_id):
     project = Project.objects.get(id=project_id)
     if request.method == 'POST':
@@ -343,6 +191,36 @@ def add_comment(request, project_id):
         form = CommentForm()
     return render(request, 'myapp/add_comment.html', {'form': form})
 
+def report_project(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+    
+    if request.method == 'POST':
+        form = ReportForm(request.POST)
+        if form.is_valid():
+            report = form.save(commit=False)
+            report.project = project
+            report.user = request.user
+            report.save()
+            return redirect('project-detail', project_id=project_id)
+    else:
+        form = ReportForm()
+    
+    return render(request, 'myapp/report_project.html', {'form': form})
+
+def report_comment(request, comment_id, project_id):
+    comment = Comment.objects.get(pk=comment_id)
+    if request.method == 'POST':
+        form = CommentReportForm(request.POST)
+        if form.is_valid():
+            report = form.save(commit=False)
+            report.comment = comment
+            report.user = request.user
+            report.save()
+            # Redirect to the project list page after reporting successfully
+            return redirect('project-detail', project_id=project_id)
+    else:
+        form = CommentReportForm()
+    return render(request, 'myapp/report_comment_form.html', {'form': form})
 # Similarly, implement views for donation, reporting, rating, and other actions
 
 
