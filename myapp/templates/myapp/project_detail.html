@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,47 +6,103 @@
     <title>{{ project.title }}</title>
     <style>
         /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
         .container {
-            max-height: 400px; /* Define the maximum height of the container */
-            overflow-y: auto; /* Enable vertical scrolling */
-            border: 1px solid #ccc; /* Add border for visual appeal */
-            padding: 10px; /* Add padding to the container */
-            margin-bottom: 20px; /* Add some space between elements */
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        /* Style for individual comments */
-        .comment {
-            margin-bottom: 10px; /* Add some space between comments */
+        h1 {
+            color: #333;
+            text-align: center;
         }
-    </style>
+        p {
+            color: #666;
+        }
+        .container h2 {
+            color: #444;
+            margin-top: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .container a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #4caf50;
+            text-decoration: none;
+        }
+        .container form {
+            margin-top: 20px;
+        }
+        .container button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .container button:hover {
+            background-color: #45a049;
+        }
+            </style>
 </head>
 <body>
-    <h1>{{ project.title }}</h1>
+    {% block content %}
+
+    
+    
+    <div class="container">
+        <h1>{{ project.title }}</h1>
+        <h2>Overall Average Rating: {{ average_rating|default:"No ratings yet" }} %</h2>
+    
     <p>{{ project.details }}</p>
     <p>Category: {{ project.category }}</p>
     <p>Total Target: {{ project.total_target }}</p>
     <p>Start Time: {{ project.start_time }}</p>
     <p>End Time: {{ project.end_time }}</p>
     
-    <div class="container">
-        <h2>Comments:</h2>
+</div>
+<div class="container">
+        <h2>Comments</h2>
         <ul>
             {% for comment in comments %}
                 <li class="comment">{{ comment.content }}</li>
             {% endfor %}
         </ul>
+        <a href="{% url 'add-comment' project.id %}" class="action-button">Add Comment</a>
     </div>
     
     <div class="container">
-        <h2>Donations:</h2>
+        <h2>Donations</h2>
         <ul>
             {% for donation in donations %}
                 <li>{{ donation.amount }}</li>
             {% endfor %}
         </ul>
+        <form method="post" class="donation-form">
+            {% csrf_token %}
+            {{ donation_form.as_p }}
+            <button type="submit" class="action-button">Make Donation</button>
+        </form>
     </div>
     
     <div class="container">
-        <h2>Reports:</h2>
+        <h2>Reports</h2>
         <ul>
             {% for report in reports %}
                 <li>{{ report.reason }}</li>
@@ -54,60 +111,25 @@
     </div>
     
     <div class="container">
-        <h2>Ratings:</h2>
+        <h2>Ratings</h2>
         <ul>
             {% for rating in ratings %}
                 <li>{{ rating.value }}</li>
             {% endfor %}
         </ul>
-    </div>
-    
-    <a href="{% url 'add-comment' project.id %}">Add Comment</a>
-    
-    <div class="container">
-        <h2>Donations:</h2>
-        <ul>
-            {% for donation in donations %}
-                <li>{{ donation.amount }}</li>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <form method="post">
-        {% csrf_token %}
-        {{ donation_form.as_p }}
-        <button type="submit">Make Donation</button>
-    </form>
-    
-    <div class="container">
-        <h2>Overall Average Rating: {{ average_rating|default:"No ratings yet" }} %</h2>
-
-        <h2>Ratings:</h2>
-        {% if ratings %}
-            <ul>
-                {% for rating in ratings %}
-                    <li>{{ rating.value }}</li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            <p>No ratings yet.</p>
-        {% endif %}
-
-        <h2>Rate This Project:</h2>
-        <form method="post">
+        <form method="post" class="rating-form">
             {% csrf_token %}
             {{ rating_form.as_p }}
-            <button type="submit">Rate</button>
+            <button type="submit" class="action-button">Rate This Project</button>
         </form>
     </div>
-
-    <div class="container">
-        <h3>Similar Projects:</h3>
-        <ul>
-            {% for similar_project in similar_projects %}
-                <li>{{ similar_project.title }}</li>
-            {% endfor %}
-        </ul>
-    </div>
+    
+    <h3>Similar Projects:</h3>
+    <ul>
+        {% for similar_project in similar_projects %}
+            <li>{{ similar_project.title }}</li>
+        {% endfor %}
+    </ul>
+    {% endblock %}
 </body>
 </html>

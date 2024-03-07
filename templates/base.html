@@ -8,62 +8,124 @@
     <title>{% block title %}WebSite{% endblock %}</title>
     <link href="{% static 'Css/bootstrap.min.css' %}" rel="stylesheet">
     <link href="{% static 'Css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'Css/form.css' %}">
+<!-- CSS -->
+
+<!-- JavaScript (optional, if you need carousel controls) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-MuhmVcxcw3cAh1zst5dCx8l4i5Rx9Ogs+76h6HS33DkKliId5A+TxVDewW5YV1/AKJVhTkYbW3YU8mWsI5MV/g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
     <link rel="icon" href="">
-    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+z5vIOIpkDkUrOymawXQK+IV5+TN3s6m8w3zaGt" crossorigin="anonymous">
 </head>
 <body>
     <header>
-        <!-- Header content -->
     </header>
-        <!-- <nav class="">
-            <div class="container-fluid">
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <a class="navbar-brand" href="{%url 'index'%}">Home</a>
-              <div class="collapse navbar-collapse d-flex " id="navbarTogglerDemo03">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{%url 'login'%}">Log In</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link active" href="{%url 'sighup'%}">Sign Up</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </nav>   -->
           <nav id="navbar" class="navbar  d-flex justify-content-center navbar-expand-lg text-center bg-dark ">
             <ul>
               <li><a class="nav-link scrollto active" href="{%url 'index'%}">Home</a></li>
               <li><a class="nav-link scrollto" href="{%url 'login'%}">Log In</a></li>
-              <li><a class="nav-link scrollto " href="">Start Project</a></li>
-              <li><a class="nav-link scrollto" href="">Show Projects</a></li>           
+              <li><a class="nav-link scrollto" href="{%url 'team'%}">Team</a></li>
+              <li><a class="nav-link scrollto " href="{%url 'create'%}">Start Project</a></li>
+              <li><a class="nav-link scrollto" href="{%url 'list'%}">Show Projects</a></li>           
             <i class="bi bi-list mobile-nav-toggle"></i>
-            <form class="d-flex m-3" role="search" action="{% url 'search-result' %}">
-              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" required>
+            <form class="d-flex m-3" method="get" action="{% url 'search-result' %}">
+              {% csrf_token %}
+              <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search" required>
               <button class="btn btn-dark" type="submit">Search</button>
-            </form>
-            <li><a class="nav-link scrollto" href="">Categories</a></li>
+          </form>
+          
+            <li> 
+              <li class="dropdown"><a href="#"><span>Categories</span> <i class="bi bi-chevron-right"></i></a>
+                {% block Cat %}
+                <ul>
+                  {% for cat in categories %}
+                  <li><a href="{% url 'category_projects' cat.id %}" class="text-dark">{{ cat.name }}</a></li>
+                  {% endfor %}
+                </ul>
+                {% endblock %}
+              </li>
             </ul>
           </nav>
-          <!-- .navbar -->
-           <main>
+          <main>
         {% block content %}
       
         {% endblock %}
     </main>
-          {% block 'Section' %}
+    {% block 'Section' %}
         
-          {% endblock %}
-         
-   
+    {% endblock %}
+  <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+ <footer id="footer" style=" background: black; margin-bottom: 0; " class="p-4">
+        <div class="footer-top">
+          <div class="container">
+            <div class="row">
+    
+              <div class="col-lg-3 col-md-6">
+                <div class="footer-info">
+                  <h3>Crowd-Funding<span>.</span></h3>
+                  <p>
+                    A108 Adam Street <br>
+                    NY 535022, USA<br><br>
+                    <strong>Phone:</strong> +1 5589 55488 55<br>
+                    <strong>Email:</strong> info@example.com<br>
+                  </p>
+                  <div class="social-links mt-3">
+                    <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
+                    <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>
+                    <a href="#" class="instagram"><i class="bx bxl-instagram"></i></a>
+                    <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
+                    <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
+                  </div>
+                </div>
+              </div>
+    
+              <div class="col-lg-2 col-md-6 footer-links">
+                <h4>Useful Links</h4>
+                <ul>
+                  <li><i class="fa-brands fa-instagram" style="color: #f20736;"></i> <a href="#">Home</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                </ul>
+              </div>
+    
+              <div class="col-lg-3 col-md-6 footer-links">
+                <h4>Our Services</h4>
+                <ul>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+                  <li><i class="fa-brands fa-instagram" style="color: #f20736;"></i> <a href="#">Marketing</a></li>
+                  <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                </ul>
+              </div>
+    
+              <div class="col-lg-4 col-md-6 footer-newsletter">
+                <h4>Our Newsletter</h4>
+                <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+                <form action="" method="post">
+                  <input type="email" name="email"><input type="submit" value="Subscribe">
+                </form>
+    
+              </div>
+    
+            </div>
+          </div>
+        </div>
 
-    <footer>
-        <!-- Footer content -->
-    </footer>
-    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        <div class="container">
+          <div class="copyright">
+            &copy; Copyright <strong><span>ITI</span></strong>. All Rights Reserved
+          </div>
+          <div class="credits">
+           
+          </div>
+        </div>
+ </footer>
+ <script href="{% static 'Js/bootstrap.min.js' %}" rel="stylesheet"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
-
