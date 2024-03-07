@@ -6,16 +6,38 @@
     <h2>Projects</h2>
     <p>Projects in {{ category.name }}</p>
   </div>
-</div><div class="row"></div>
+</div>
+<div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="100">
   {% for project in projects %}
-  <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" style="width: auto;">
-    <div class="icon-box">
-      <img src="../../../static/img/team-1.jpg" style="height: 200px;">
-      <div class="icon"><i class="bx bxl-dribbble"></i></div>
-      <h4><a href="">{{ project.title }} </a></h4>
-      <p>Start Time: {{ project.start_time }}</p>
-    </div>
-   {% endfor %} </div>
+  <div class="col-lg-4 col-md-6 col-sm-12">
+      <div class="card border-0 shadow">
+          <div id="carousel{{ project.id }}" class="carousel slide" data-bs-ride="carousel" style="height: 300px;">
+              <div class="carousel-inner" style="height: 300px;">
+                  {% for image in project.picture_set.all %}
+                  <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                      <img src="{{ image.image.url }}" class="d-block w-100" alt="Project Image">
+                  </div>
+                  {% endfor %}
+              </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ project.id }}" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ project.id }}" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+              </button>
+          </div>
+          <div class="card-body" style="height: 300px;">
+              <h4 class="card-title"><a href="{% url 'project-detail' project.id %}">{{ project.title }}</a></h4>
+              <p class="card-text">Start Time: {{ project.start_time }}</p>
+              <p>{{ project.details }}</p>
+              <a href="{% url 'project-detail' project.id %}" class="btn btn-sm btn-outline-secondary mt-auto">See More</a>
+          </div>
+      </div>
+  </div>
+  {% endfor %}
+</div>
 </div> 
   </ul>
   <pre>

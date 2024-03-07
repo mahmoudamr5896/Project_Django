@@ -1,108 +1,38 @@
+{% extends 'base.html' %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ project.title }}</title>
-    <style>
-        /* Add your CSS styles here */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            color: #333;
-            text-align: center;
-        }
-        p {
-            color: #666;
-        }
-        .container h2 {
-            color: #444;
-            margin-top: 20px;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            margin-bottom: 10px;
-        }
-        .container a {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #4caf50;
-            text-decoration: none;
-        }
-        .container form {
-            margin-top: 20px;
-        }
-        .container button {
-            background-color: #4caf50;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .container button:hover {
-            background-color: #45a049;
-        }
-            </style>
-</head>
-<body>
-    {% block content %}
+{% block content %}
+<div class="container">
+    <h1>{{ project.title }}</h1>
+    
 
-    
-    
-    <div class="container">
-        <h1>{{ project.title }}</h1>
-        <h2>Overall Average Rating: {{ average_rating|default:"No ratings yet" }} %</h2>
-    
+    <div id="projectCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            {% for image in project.picture_set.all %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <img src="{{ image.image.url }}" class="d-block w-100" alt="Project Image">
+                </div>
+            {% endfor %}
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <h2>Overall Average Rating: {{ average_rating|default:"No ratings yet" }} %</h2>
     <p>{{ project.details }}</p>
     <p>Category: {{ project.category }}</p>
     <p>Total Target: {{ project.total_target }}</p>
     <p>Start Time: {{ project.start_time }}</p>
     <p>End Time: {{ project.end_time }}</p>
+
+  
     
-<<<<<<< HEAD
-    <h2>Comments:</h2>
-<ul>
-    {% for comment in comments %}
-    <li>
-        {{ comment.content }}
-        <a href="{% url 'report-comment' comment.id project.id %}" class="btn btn-danger">Report Comment</a>
-        
-    </li>
-    
-{% endfor %}
-<a href="{% url 'add-comment' project.id %}">Add Comment</a>
-</ul>
-    <h2>Donations:</h2>
-    <ul>
-        {% for donation in donations %}
-            <li>{{ donation.amount }}</li>
-        {% endfor %}
-    </ul>
-    
-    <h2>Reports:</h2>
-    <h4>Number of Reports: {{ report_count }}</h4>
-    <a href="{% url 'report-project' project_id=project.id %}" class="btn btn-danger">Report Project</a>
-   
-=======
-</div>
-<div class="container">
+    <div class="container">
         <h2>Comments</h2>
         <ul>
             {% for comment in comments %}
@@ -134,7 +64,6 @@
             {% endfor %}
         </ul>
     </div>
->>>>>>> origin/pro
     
     <div class="container">
         <h2>Ratings</h2>
@@ -150,63 +79,35 @@
         </form>
     </div>
     
-<<<<<<< HEAD
-   
-    
-    <h2>Donations:</h2>
-    <ul>
-        {% for donation in donations %}
-            <li>{{ donation.amount }}</li>
-        {% endfor %}
-    </ul>
-
-    <form method="post">
-        {% csrf_token %}
-        {{ donation_form.as_p }}
-        <button type="submit">Make Donation</button>
-    </form>
-
-    <h2>Overall Average Rating: {{ average_rating|default:"No ratings yet" }} %</h2>
-    <h2>Ratings:</h2>
-    {% if ratings %}
-        <ul>
-            {% for rating in ratings %}
-                <li>{{ rating.value }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>No ratings yet.</p>
-    {% endif %}
-
-    <h2>Rate This Project:</h2>
-    <form method="post">
-        {% csrf_token %}
-        {{ rating_form.as_p }}
-        <button type="submit">Rate</button>
-    </form>
-
-    <h3>Tags:</h3>
-<p>
-    {% for tag in tags %}
-        {% if tag.name|length > 1 %}
-            {{ tag.name }}
-            {% if not forloop.last %}, {% endif %}
-        {% endif %}
-    {% endfor %}
-</p>
-
-=======
->>>>>>> origin/pro
     <h3>Similar Projects:</h3>
     <ul>
         {% for similar_project in similar_projects %}
             <li>{{ similar_project.title }}</li>
         {% endfor %}
     </ul>
-<<<<<<< HEAD
+</div>
+{% endblock %}
 
-=======
->>>>>>> origin/pro
-    {% endblock %}
-</body>
-</html>
+{% block scripts %}
+<!-- Bootstrap Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-5e2b9jjcOwKUsGPEFjXeRn5zkp1F9rUlVkfywu0Bnq3PLKLYgYAv6aiSvm6P1e8r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-8KBctz4umXQ4DQj3M4sTEMTs9mOAXuoTrAZ+1BSKAN+M7FlFN/b3oqTG2HS9BSUG" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Activate the carousel
+        var carousel = new bootstrap.Carousel(document.querySelector('#projectCarousel'), {
+            interval: false // Disable auto sliding
+        });
+        
+        // Optional: Add event listeners for previous and next buttons
+        document.querySelector('#prevButton').addEventListener('click', function() {
+            carousel.prev();
+        });
+        
+        document.querySelector('#nextButton').addEventListener('click', function() {
+            carousel.next();
+        });
+    });
+</script>
+{% endblock %}
+

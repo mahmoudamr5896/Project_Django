@@ -1,39 +1,33 @@
 {% extends "base.html" %}
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Project List</title>
 </head>
-{% block 'Section' %}
-
-    <div class="container">
-        <h1 style="background-color: whitesmoke;
-    font-family: Century Gothic;
-    font-size: 2.5rem;
-    font-weight: bold;
-    padding: 20px; 
-    border: 2px solid black; 
-    border-radius: 10px; 
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); 
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;">All pojects</h1>
+{% block content %}
+<div class="container">
+    <h1>All Projects</h1>
     <div class="row">
         {% for project in projects %}
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <a  href="{% url 'project-detail' project.id %}"><img class="card-img-top" src="../../../static/img/team-1.jpg" alt="{{ project.title }}"></a>
-                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                        <h5 class="card-title">{{ project.title }}</h5>
-                        <div class="btn-group">
-                            <a href="{% url 'project-detail' project.id %}" class="btn btn-sm btn-outline-success">Details</a>
-                        </div>
+        <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+                {% if project.picture_set.all %}
+                <!-- Display the first image of the project -->
+                <a href="{% url 'project-detail' project.id %}">
+                    <img class="card-img-top" src="{{ project.picture_set.first.image.url }}" alt="{{ project.title }}" style="height: 300px;">
+                </a>
+                {% endif %}
+                <div class="card-body d-flex flex-column align-items-center justify-content-center" style="height: 300px;">
+                    <h5 class="card-title">{{ project.title }}</h5>
+                    <div class="btn-group">
+                        <a href="{% url 'project-detail' project.id %}" class="btn btn-sm btn-outline-success">Details</a>
                     </div>
-                    
                 </div>
             </div>
+        </div>
         {% endfor %}
     </div>
 </div>
