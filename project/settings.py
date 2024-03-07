@@ -38,15 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "myapp",
-<<<<<<< HEAD
     'taggit',
-=======
-    "users",
-    "django.contrib.sites",
-    "allauth",
-    "allauth.account",
-    "allauth.socialaccount",
->>>>>>> origin/ahmedreda
 ]
 
 SITE_ID = 1
@@ -130,15 +122,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
-<<<<<<< HEAD
 STATIC_FILES_DIRS=[
     os.path.join(BASE_DIR,'static')
 ]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-=======
-STATIC_FILES_DIRS = [os.path.join(BASE_DIR, "static")]
->>>>>>> origin/ahmedreda
 # settings.py
 STATICFILES_DIRS = [
     BASE_DIR / "static",

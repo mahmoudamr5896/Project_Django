@@ -2,10 +2,18 @@
 from asyncio import _register_task
 from django.http import HttpResponseRedirect
 from django.forms import inlineformset_factory
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+
+@login_required
+def my_protected_view(request):
+    # Your view logic goes here
+    return render(request, 'my_protected_template.html')
+from django.contrib.auth.models import User
 
 from django.contrib import messages
 from django.urls import reverse
-from taggit.models import Tag
+from .models import Tag
 from audioop import ratecv
 from unittest import loader
 from urllib import request
@@ -17,28 +25,9 @@ from .forms import  CommentReportForm, ProjectForm, CommentForm, DonationForm, P
 from django.db.models import Avg
 from django.template.defaultfilters import slugify
 from django.db.models import Q
-<<<<<<< HEAD
 import re
 from django.db.models import Count
 ##########################################################################################################
-=======
-
-from users.models import User
-from .models import FeaturedProject, Project, Comment, Donation, Report, Rating,Tag ,Category
-from .forms import ProjectForm, CommentForm, DonationForm, ReportForm, RatingForm
-from django.db.models import Avg
-from django.db.models import Q
-from allauth.account.forms import LoginForm
-from django.urls import reverse
-from django.shortcuts import redirect
-from django.contrib.auth.decorators import login_required
-# Create your views here.
-#  Mahmoud Amr Working In home :
-# def index(request):
-    # return HttpResponse("Happy Day Mahmoud")
-    # return render(request, 'myapp/home.html')
-#_________________________________________________ _________________________________________________________________
->>>>>>> origin/ahmedreda
 NULL={}
 
 
