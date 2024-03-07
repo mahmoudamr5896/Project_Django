@@ -119,6 +119,15 @@
             <p>Total Target: {{ project.total_target }}</p>
             <p>Start Time: {{ project.start_time }}</p>
             <p>End Time: {{ project.end_time }}</p>
+            <h3>Tags:</h3>
+            <p>
+                {% for tag in tags %}
+                    {% if tag.name|length > 1 %}
+                        {{ tag.name }}
+                        {% if not forloop.last %}, {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </p>
         </div>
         </div> 
         </div>
@@ -182,7 +191,7 @@
             
             <div class="container col-3 container1">
                 <h2>Ratings:</h2>
-                <div id="ratings-list">
+                <div id="ratings-list" style="display: none;">
                     {% if ratings %}
                         <ul>
                             {% for rating in ratings %}
@@ -197,10 +206,12 @@
                     {% csrf_token %}
                     {{ rating_form.as_p }}
                     <button class="btn btn-primary" type="submit">Rate</button>
-                    <button type="button" id="toggle-button" class="btn btn-secondary" onclick="toggleRatings()">Hide Ratings</button>
-
+                    <button type="button" id="toggle-button" class="btn btn-secondary" onclick="toggleRatings()">Show Ratings</button>
                 </form>
-            </div>
+                
+               
+                
+            </div> 
         </div>
     </div>
 
@@ -209,26 +220,27 @@
 
 
 
-
-
-
-    <h3>Tags:</h3>
-<p>
-    {% for tag in tags %}
-        {% if tag.name|length > 1 %}
-            {{ tag.name }}
-            {% if not forloop.last %}, {% endif %}
-        {% endif %}
+ <h3 style="margin-top: 30px; margin-bottom: 30px; text-align: center;" >Similar Projects:</h3>
+ <div class="container">
+<div class="row">
+    
+    {% for similar_project in similar_projects %}
+        <div class="col-3">
+            <div class="card">
+                <img src="{{ similar_project.image.url }}" class="card-img-top" alt="{{ similar_project.title }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ similar_project.title }}</h5>
+                </div>
+            </div>
+        </div>
     {% endfor %}
-</p>
+</div>
+</div> 
 
-    <h3>Similar Projects:</h3>
-    <ul>
-        {% for similar_project in similar_projects %}
-            <li>{{ similar_project.title }}</li>
-        {% endfor %}
-    </ul>
-    {% endblock %}
+
+{% endblock %}
+
+    
   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 
@@ -308,6 +320,20 @@
             }
         });
     });
+</script>
+<script>
+    function toggleRatings() {
+        var ratingsList = document.getElementById("ratings-list");
+        var toggleButton = document.getElementById("toggle-button");
+                
+        if (ratingsList.style.display === "none") {
+            ratingsList.style.display = "block";
+            toggleButton.textContent = "Hide Ratings";
+        } else {
+            ratingsList.style.display = "none";
+            toggleButton.textContent = "Show Ratings";
+        }
+    }
 </script>
 </body>
 </html>
