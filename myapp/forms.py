@@ -8,7 +8,7 @@ class ProjectForm(forms.ModelForm):
     
     class Meta:
         model = Project
-        fields = ['title', 'details', 'tags', 'category', 'total_target', 'start_time', 'end_time']
+        fields = ['title', 'details', 'tags', 'category', 'total_target', 'start_time', 'end_time','images']
 
         
 

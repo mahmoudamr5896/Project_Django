@@ -20,7 +20,8 @@ from django.conf import settings
 from django.conf.urls.static import static
 from myapp import views
 from myapp.views import add_comment, category_projects, create_project, index ,login, project_detail, project_list ,sighup,search, team
-
+from django.conf import settings 
+from django.conf.urls.static import static
 
 
 
@@ -43,8 +44,4 @@ urlpatterns = [
     path('report-comment/<int:comment_id>/<int:project_id>/', views.report_comment, name='report-comment'),
 
 
-    
-
-
-
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
