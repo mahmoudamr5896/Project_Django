@@ -1,17 +1,12 @@
 {% extends "base.html" %}
 {% load static %}
-
-
-          {% block Cat %}
-          
+          {% block Cat %} 
           <ul>
             {% for cat in categories %}
             <li><a href="{% url 'category_projects' cat.id %}" class="text-dark">{{ cat.name }}</a></li>
             {% endfor %}
           </ul>
           {% endblock %}
-
-
 {% block content %}
 <section id="hero" class="d-flex align-items-center justify-content-center">
  <div class="container" data-aos="fade-up">
@@ -29,7 +24,11 @@
         <div class="col-xl-2 col-md-4">
           <div class="icon-box">
           <img src="../../../static/img/team-1.jpg" style="height: 100px;">
-            <h3><a href="">{{ project.title }} - Rating: {{ project.rating.value }}</a></h3>
+            <h3><a href="">{{ project.title }}<br>
+              Rating: {{ project.rating }}<br>
+            </a></h3>
+            <a href="{% url 'project-detail' project.id %}" class="btn btn-sm btn-outline-success">See More</a>
+
           </div>
       </div>
         {% endfor %}
@@ -44,16 +43,22 @@
       <div class="section-title">
         <h2>Projects</h2>
         <p>Check our Latest</p>
-      </div><div class="row"></div>
-      {% for project in latest_projects %}
-        <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100" style="width: auto;">
-          <div class="icon-box">
-            <img src="../../../static/img/team-1.jpg" style="height: 200px;">
-            <div class="icon"><i class="bx bxl-dribbble"></i></div>
-            <h4><a href="">{{ project.title }} </a></h4>
-            <p>Start Time: {{ project.start_time }}</p>
+      </div> 
+      <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="100">
+        {% for project in latest_projects %}
+        <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
+          <div class="card border-0 shadow">
+            <img src="../../../static/img/team-1.jpg" class="card-img-top" alt="{{ project.title }}">
+            <div class="card-body">
+              <h4 class="card-title"><a href="{% url 'project-detail' project.id %}">{{ project.title }}</a></h4>
+              <p class="card-text">Start Time: {{ project.start_time }}</p>
+              <a href="{% url 'project-detail' project.id %}" class="btn btn-sm btn-outline-success">Details</a>
+            </div>
           </div>
-         {% endfor %} </div>
+        </div>
+        {% endfor %}
+      </div>
+      
       </div>
 
     </div>
@@ -65,17 +70,20 @@
         <h2>Projects</h2>
         <p>Check our Featured Project</p>
       </div>
-      {% for project in latest_featured_projects %}
-      <div class="row">
-        <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-          <div class="icon-box">
-            <img src="../../../static/img/team-1.jpg" style="height: 200px;">
-            <div class="icon"><i class="bx bxl-dribbble"></i></div>
-            <h4><a href="">{{project.title}} </a></h4>
-            <p>Start Time: {{ project.start_time }}</p>
+      <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="100">
+        {% for projects in latest_featured_projects %}
+        <div class="col-lg-4 col-md-6 col-sm-12 d-flex align-items-stretch">
+          <div class="card border-0 shadow">
+            <img src="../../../static/img/team-1.jpg" class="card-img-top" alt="{{ projects.project.title }}">
+            <div class="card-body">
+              <h4 class="card-title"><a href="{% url 'project-detail' projects.project.id %}">{{ projects.project.title }}</a></h4>
+              <p class="card-text">Start Time: {{ projects.project.start_time }}</p>
+              <a href="{% url 'project-detail' projects.project.id %}" class="btn btn-sm btn-outline-success">Details</a>
+            </div>
           </div>
         </div>
-         {% endfor %}
+        {% endfor %}
+      </div>
       </div>
     </div>
   </section>
