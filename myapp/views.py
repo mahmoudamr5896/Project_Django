@@ -364,7 +364,6 @@ def add_comment(request, project_id):
 
 
 
-<<<<<<< HEAD
 @login_required
 def profile(request):
     user_email = request.session.get("email")
@@ -373,11 +372,6 @@ def profile(request):
     return render(request, 'myapp/profile.html', context)
 
 # modifed 
-=======
-
-
-#  get user from session
->>>>>>> origin/pro
 def login(request):
     return redirect(reverse('profile'))
 
