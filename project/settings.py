@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-_*)%-#ps6$+prejn&5e^u)6oi3-dch+#%9e3m%w2-gmxe$_a_x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,16 +38,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "myapp",
-<<<<<<< HEAD
     "users",
     "django.contrib.sites",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-=======
     'taggit',
->>>>>>> b2
 ]
+
 
 SITE_ID = 1
 
@@ -130,15 +128,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
-<<<<<<< HEAD
 STATIC_FILES_DIRS = [os.path.join(BASE_DIR, "static")]
-=======
-STATIC_FILES_DIRS=[
-    os.path.join(BASE_DIR,'static')
-]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
->>>>>>> b2
 # settings.py
 STATICFILES_DIRS = [
     BASE_DIR / "static",
@@ -159,18 +151,17 @@ SITE_ID = 1  # Or set it to your Site ID if you have multiple sites
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1  # Activation link expiration time (1 day)
-
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = ""
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = "ae4755740@gmail.com"
 EMAIL_HOST_PASSWORD = "flmbjweippzhouft"
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-ACCOUNT_LOGOUT_REDIRECT_URL = "/"
+ACCOUNT_LOGOUT_REDIRECT_URL = "/login/"
 LOGIN_URL = "/login/"
 # djauth/settings.py
-LOGIN_REDIRECT_URL = "/user/success"
+LOGIN_REDIRECT_URL = "/profile/"
 LOGOUT_REDIRECT_URL = "/"
 
 

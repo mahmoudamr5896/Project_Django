@@ -1,12 +1,8 @@
 
 from django.utils import timezone
 from django.db import models
-<<<<<<< HEAD
 from users.models import User
-=======
-from django.contrib.auth.models import User
 from taggit .managers import TaggableManager
->>>>>>> b2
 
 class Category(models.Model):
     name = models.CharField(max_length=100)

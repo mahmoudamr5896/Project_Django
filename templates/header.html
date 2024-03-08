@@ -18,10 +18,15 @@
           <nav id="navbar" class="navbar  d-flex justify-content-center navbar-expand-lg text-center bg-dark " >
             <ul style="margin-top: 20px; margin-bottom: 20px;">
               <li><a class="nav-link scrollto active" href="{%url 'index'%}">Home</a></li>
-              <li><a class="nav-link scrollto" href="{%url 'login'%}">Log In</a></li>
-              <li><a class="nav-link scrollto" href="{%url 'team'%}">Team</a></li>
+
+             
+              {% if request.user.is_authenticated %}
               <li><a class="nav-link scrollto " href="{%url 'create'%}">Start Project</a></li>
-              <li><a class="nav-link scrollto" href="{%url 'list'%}">Show Projects</a></li>           
+              <li><a class="nav-link scrollto" href="{%url 'list'%}">Show Projects</a></li>   
+              {% else %}        
+              <li><a class="nav-link scrollto" href="{%url 'login'%}">Log In</a></li>
+              {% endif %}
+              <li><a class="nav-link scrollto" href="{%url 'team'%}">Team</a></li>
             <i class="bi bi-list mobile-nav-toggle"></i>
             
             
