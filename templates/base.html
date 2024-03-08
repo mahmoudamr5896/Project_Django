@@ -27,6 +27,11 @@
               {% if request.user.is_authenticated %}
               <li><a class="nav-link scrollto " href="{%url 'create'%}">Start Project</a></li>
               <li><a class="nav-link scrollto" href="{%url 'list'%}">Show Projects</a></li> 
+<<<<<<< HEAD
+=======
+              <li><a href="{% url 'account_logout' %}">Log Out</a></li>
+
+>>>>>>> ahmedreda
               {% else %}        
               <li><a class="nav-link scrollto" href="{%url 'login'%}">Log In</a></li>
               {% endif %}
