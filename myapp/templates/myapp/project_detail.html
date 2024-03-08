@@ -24,11 +24,11 @@
             color: #444;
             margin-top: 20px;
         }
-        ul {
+        .ul {
             list-style-type: none;
             padding: 0;
         }
-        li {
+        .li {
             margin-bottom: 10px;
         }
         .container a {
@@ -69,15 +69,14 @@
         margin-top: 20px;
         margin-bottom: 20px;">{{ project.title }} Project</h1>
 
-        <h2 class="d-flex justify-content-center">Overall Average Rating: {{ average_rating|default:"No ratings yet" }} %</h2>
         <div class="container" style="margin-top: 20px;">
-            <div class="row">
-                <div class="container col-5 d-flex justify-content-center">
+        <h2 class="d-flex justify-content-center">Overall Average Rating: {{ average_rating|default:"No ratings yet" }} %</h2>
+            
         <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">
                 {% for image in project.picture_set.all %}
-                <div class="carousel-item {% if forloop.first %}active{% endif %}" style="height: 300px;">
-                    <img src="{{ image.image.url }}" class="d-block w-100"  alt="Project Image">
+                <div class="carousel-item {% if forloop.first %}active{% endif %}" >
+                    <img src="{{ image.image.url }}" class="d-block w-100"  alt="Project Image" style="height: 700px;">
                 </div>
                 {% endfor %}
             </div>
@@ -92,24 +91,26 @@
             
           </div>
         </div>
-        <div class="container col-5"> 
+        
+<div style='margin-top:30px'>
+        <ul>
+            <h3><li>Category: {{ project.category }}</li></h3>
+            <h3><li>Total Target: {{ project.total_target }}</li></h3>
+            <h3><li>Start Time: {{ project.start_time }}</li></h3>
+            <h3><li>End Time: {{ project.end_time }}</li></h3>
+             <h3><li><h3>Tags:</h3></li>
             
-            <p>Category: {{ project.category }}</p>
-            <p>Total Target: {{ project.total_target }}</p>
-            <p>Start Time: {{ project.start_time }}</p>
-            <p>End Time: {{ project.end_time }}</p>
-            <h3>Tags:</h3>
-            <p>
-                {% for tag in tags %}
-                    {% if tag.name|length > 1 %}
-                        {{ tag.name }}
-                        {% if not forloop.last %}, {% endif %}
-                    {% endif %}
-                {% endfor %}
-            </p>
-        </div>
-        </div> 
-        </div>
+                <ul >
+                    {% for tag in tags %}
+                        {% if tag.name|length > 1 %}
+                        <h3> <li>{{ tag.name }}</li></h3>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            
+        </ul>
+</div >
+       
     </div>
         
            
@@ -118,10 +119,10 @@
         <div class="row">
             <div class="container col-3 container1">
                 <h2>Comments:</h2>
-<ul id="commentsList" style="display: none;">
+<ul class="ul"id="commentsList" style="display: none;">
     {% for comment in comments %}
-    <div class="container col-8 d-flex justify-content-center">
-        <li>{{ comment.content }} <a href="{% url 'report-comment' comment.id project.id %}" class="btn btn-danger"style="color: white;">Report Comment</a></li>
+    <div class="container d-flex justify-content-center">
+        <li class="li">{{ comment.content }} <a href="{% url 'report-comment' comment.id project.id %}" class="btn btn-danger"style="color: white;">Report Comment</a></li>
     </div>
     {% endfor %}
 </ul>
@@ -133,9 +134,11 @@
     </form>
 </div>
 <div class="row">
-    <div class="container col-6 ">
-        <button id="showCommentsBtn" class="btn btn-secondary">Show Comment</button>
-        <a id="addCommentBtn" class="btn btn-success" href="{% url 'add-comment' project.id %}" style="color: white;">Add Comment</a>
+    <div class=" col-6 ">
+        <a><button id="showCommentsBtn" class="btn btn-secondary">Show Comment</button></a>
+    </div>
+    <div class=" col-6 ">
+        <a id="addCommentBtn" class="btn btn-primary" href="{% url 'add-comment' project.id %}" style="color: white;">Add Comment</a>
     </div>
 </div>
 
@@ -151,9 +154,9 @@
             <div class="container col-3 container1" >
                 
                     <h2>Donations:</h2>
-                    <ul id="donationsList" style="display: none;">
+                    <ul class="ul" id="donationsList" style="display: none;">
                         {% for donation in donations %}
-                            <li>{{ donation.amount }}</li>
+                            <li class="il">{{ donation.amount }}</li>
                         {% endfor %}
                     </ul>
                     <p id="totalDonations" style="display: none;">Total: {{ total_donations }}</p>
@@ -162,9 +165,15 @@
                 <form method="post">
                     {% csrf_token %}
                     {{ donation_form.as_p }}
+                    <div class="row">
+                        <div class="col-6">
+                        
                     <button id="makeDonationBtn" type="submit" class="btn btn-primary">Make Donation</button>
+                </div>
+                    <div class=" col-6">
                     <button id="toggleDonationsBtn" class="btn btn-secondary">Show Donations</button>
-
+                </div>
+            </div>
                 </form>
             </div> 
             
@@ -172,7 +181,7 @@
                 <h2>Ratings:</h2>
                 <div id="ratings-list" style="display: none;">
                     {% if ratings %}
-                        <ul>
+                        <ul class="ul">
                             {% for rating in ratings %}
                                 <li>{{ rating.value }}</li>
                             {% endfor %}
@@ -199,22 +208,28 @@
 
 
 
- <h3 style="margin-top: 30px; margin-bottom: 30px; text-align: center;" >Similar Projects:</h3>
- <div class="container">
-<div class="row">
-    
-    {% for similar_project in similar_projects %}
-        <div class="col-3">
-            <div class="card">
-                <img src="{{ similar_project.image.url }}" class="card-img-top" alt="{{ similar_project.title }}">
-                <div class="card-body">
-                    <h5 class="card-title">{{ similar_project.title }}</h5>
+<h3 style="margin-top: 30px; margin-bottom: 30px; text-align: center;">Similar Projects:</h3>
+<div class="container">
+    <div class="row">
+        {% if similar_projects %}
+            {% for similar_project in similar_projects %}
+                <div class="col-3">
+                    <div class="card">
+                        <img src="{{ similar_project.image.url }}" class="card-img-top" alt="{{ similar_project.title }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ similar_project.title }}</h5>
+                        </div>
+                    </div>
                 </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <h4>No similar projects yet.</h4>
             </div>
-        </div>
-    {% endfor %}
+        {% endif %}
+    </div>
 </div>
-</div> 
+
 
 
 {% endblock %}
@@ -235,18 +250,18 @@
     
             toggleDonationsBtn.addEventListener("click", function() {
                 if (donationsList.style.display === "none") {
-                    donationsList.style.display = "block"; // Show donations
-                    toggleDonationsBtn.innerText = "Hide Donations"; // Change button text to "Hide Donations"
-                    totalDonations.style.display = "block"; // Show total donations
+                    donationsList.style.display = "block"; 
+                    toggleDonationsBtn.innerText = "Hide Donations"; 
+                    totalDonations.style.display = "block"; 
                 } else {
-                    donationsList.style.display = "none"; // Hide donations
-                    toggleDonationsBtn.innerText = "Show Donations"; // Change button text to "Show Donations"
-                    totalDonations.style.display = "none"; // Hide total donations
+                    donationsList.style.display = "none"; 
+                    toggleDonationsBtn.innerText = "Show Donations"; 
+                    totalDonations.style.display = "none";
                 }
             });
     
             makeDonationBtn.addEventListener("click", function() {
-                // You can add additional functionality here if needed
+                
             });
         });
     </script>

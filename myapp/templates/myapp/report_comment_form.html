@@ -1,6 +1,20 @@
-<!-- report_comment_form.html -->
+{% include 'header.html'%}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Report Comment</title>
+    <link rel="stylesheet" href="../../../static/Css/form.css">
+
+</head>
+<body>
+    <div class="container col-6" style="margin-top: 30px;">
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Submit Report</button>
 </form>
+    </div>
+</body>
+</html>
+{% include 'footer.html'%}
