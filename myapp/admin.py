@@ -1,4 +1,5 @@
 from django.contrib import admin
+from .models import Myuser
 
 from myapp.models import Category ,CommentReport, Donation, Picture, Project, Tag ,Comment, ProjectReport, Rating, Report , FeaturedProject
 

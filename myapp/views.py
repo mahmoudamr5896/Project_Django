@@ -49,6 +49,8 @@ def index(request):
         'user': user,
     })
 
+def profile(request):
+    return render(request, 'myapp/profile.html')
 
 
 def search(request):

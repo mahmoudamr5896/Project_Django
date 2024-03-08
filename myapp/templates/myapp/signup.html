@@ -1,0 +1,54 @@
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+    {% bootstrap_css %}
+</head>
+<body>
+    <div class="container-fluid" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4 mt-5 border border-black border-5 rounded">
+                <h2 class="text-center mt-4">Sign Up</h2>  
+                <form method="POST">
+                    {% csrf_token %} 
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="fname" placeholder="First name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="lname" placeholder="Last name" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" name="email" placeholder="Email" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" name="password" placeholder="Password" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="password" class="form-control" name="confpassword" placeholder="Confirm password" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="phone" placeholder="Mobile phone" required>
+                    </div>
+                    <div class="mb-3">
+                        {% comment %} <div class="input-group mb-3">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="profile_pic" name="profile_pic" required>
+                                <label class="custom-file-label" for="profile_pic">Choose Profile Picture</label>
+                            </div>
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="upload">Upload</span>
+                            </div>
+                        </div> {% endcomment %}
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center mb-4">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </div>
+</body>
+</html>
