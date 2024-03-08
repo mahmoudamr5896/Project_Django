@@ -23,6 +23,7 @@ class User(AbstractUser):
         return self.email
     
     def save(self, *args, **kwargs):
+        self.username = self.email 
         super().save(*args, **kwargs)
         profile, status = Profile.objects.get_or_create(user=self)
         profile.first_name = self.first_name

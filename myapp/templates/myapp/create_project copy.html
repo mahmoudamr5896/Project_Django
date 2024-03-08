@@ -1,20 +1,11 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-{% include 'header.html' %}
-=======
-<<<<<<< HEAD
-{% extends "base.html" %}
+
+<{% extends "base.html" %}
+
+{% load static %}
+
 
 {% include 'header.html'%}
-=======
->>>>>>> ahmedreda
-{% load static %}
-{% include 'header.html'%}
-<<<<<<< HEAD
->>>>>>> origin/pro
->>>>>>> origin/ahmedreda
-=======
->>>>>>> ahmedreda
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +15,8 @@
     <link rel="stylesheet" href="../../../static/Css/form.css">
 </head>
 <body>
-    
+
+
     <h1>Create New Project</h1>
 
     <div class="container col-7 justify-content-center">
@@ -39,11 +31,7 @@
         margin-top: 20px;
         margin-bottom: 20px;">Create Project</h1>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> ahmedreda
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
@@ -54,18 +42,7 @@
             <button type="submit">Create Project</button>
         </form>
         
-<<<<<<< HEAD
-=======
->>>>>>> origin/pro
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Create Project</button>
-    </form>
->>>>>>> origin/ahmedreda
-=======
 
->>>>>>> ahmedreda
     </div>
 
     <!-- Include JS for file upload library -->

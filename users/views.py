@@ -62,3 +62,8 @@ def delete_user(request):
         request.user.delete()
         return redirect("home")  # Redirect to home page after deletion
     return redirect("view_profile")
+
+
+def redirect_view(request):
+
+      return redirect("view_profile")
