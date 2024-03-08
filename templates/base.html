@@ -21,20 +21,14 @@
           <nav id="navbar" class="navbar  d-flex justify-content-center navbar-expand-lg text-center bg-dark ">
             <ul>
               <li><a class="nav-link scrollto active" href="{%url 'index'%}">Home</a></li>
-<<<<<<< HEAD
-              <li><a class="nav-link scrollto" href="{%url 'sighup' %}">Log In</a></li>
               <li><a class="nav-link scrollto" href="{%url 'team'%}">Team</a></li>
-=======
             
               {% if request.user.is_authenticated %}
->>>>>>> 6769bf20ecbc8a6daf94e209f736a909e8b6d504
               <li><a class="nav-link scrollto " href="{%url 'create'%}">Start Project</a></li>
               <li><a class="nav-link scrollto" href="{%url 'list'%}">Show Projects</a></li>   
               {% else %}        
               <li><a class="nav-link scrollto" href="{%url 'login'%}">Log In</a></li>
               {% endif %}
-              <li><a class="nav-link scrollto" href="{%url 'team'%}">Team</a></li>
-
             
               <i class="bi bi-list mobile-nav-toggle"></i>
             <form class="d-flex m-3" method="get" action="{% url 'search-result' %}">
