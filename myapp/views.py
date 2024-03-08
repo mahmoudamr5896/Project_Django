@@ -17,6 +17,22 @@ from .forms import  CommentReportForm, ProjectForm, CommentForm, DonationForm, P
 from django.db.models import Avg
 from django.template.defaultfilters import slugify
 from django.db.models import Q
+
+from users.models import User
+from .models import FeaturedProject, Project, Comment, Donation, Report, Rating,Tag ,Category
+from .forms import ProjectForm, CommentForm, DonationForm, ReportForm, RatingForm
+from django.db.models import Avg
+from django.db.models import Q
+from allauth.account.forms import LoginForm
+from django.urls import reverse
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
+# Create your views here.
+#  Mahmoud Amr Working In home :
+# def index(request):
+    # return HttpResponse("Happy Day Mahmoud")
+    # return render(request, 'myapp/home.html')
+#_________________________________________________ _________________________________________________________________
 import re
 from django.db.models import Count
 ##########################################################################################################
@@ -104,7 +120,10 @@ def create_project(request):
                 tags_list = [tag.strip() for tag in tags_input.split(',')]
                 for tag_name in tags_list:
                     tag, created = Tag.objects.get_or_create(name=tag_name)
-                    project.tags.add(tag)
+                    try:
+                        project.tags.add(tag)
+                    except Exception as e:
+                        print(e)
             return redirect('project_list')
     else:
         form = ProjectForm()
@@ -257,11 +276,18 @@ def report_comment(request, comment_id, project_id):
 
 
 
+@login_required
+def profile(request):
+    user_email = request.session.get("email")
+    user_info = User.objects.get(email=user_email)
+    context = {'user_info': user_info}
+    return render(request, 'myapp/profile.html', context)
 
-
-#  get user from session
+# modifed 
 def login(request):
-    return render(request, 'myapp/sighnup.html')
+    return redirect(reverse('account_login'))
+
+
 
 def sighup(request):
     return render(request, 'myapp/sighnup.html')

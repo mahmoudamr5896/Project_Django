@@ -8,6 +8,9 @@
 - A list of the categories. User can open each category to view its
 projects(category)[DONE]
 ``
+<<<<<<< HEAD
+- Search bar that enables users to search projects by title or tag [DONE]
+=======
 - Search bar that enables users to search projects by title or tag [DONE]
 
    <div class="row gy-4 mt-5 justify-content-center" data-aos="zoom-in" data-aos-delay="250">
@@ -35,3 +38,4 @@ projects(category)[DONE]
       </button>
     </div>
     </div>
+>>>>>>> origin/pro
