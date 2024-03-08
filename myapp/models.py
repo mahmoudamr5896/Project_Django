@@ -1,7 +1,7 @@
 
 from django.utils import timezone
 from django.db import models
-from django.contrib.auth.models import User
+from users.models import User
 from taggit .managers import TaggableManager
 
 class Category(models.Model):
@@ -23,16 +23,21 @@ class Project(models.Model):
     end_time = models.DateTimeField()
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
     images=models.ImageField(blank=True)
+    def __str__(self):
+        return self.title
+
+class Picture(models.Model):
+    project = models.ForeignKey(Project, default=None, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='images/')  
+
+    def __str__(self):
+        return self.project.title
+  
       
 class SimilarProject(models.Model):
     base_project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='base_project')
     similar_project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='similar_project')
 
-class Picture(models.Model):
-    project = models.ForeignKey(Project, default=None, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='project_images/')
-    def __str__(self):
-            return self.image.name
 
 class Comment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
@@ -94,4 +99,8 @@ class FeaturedProject(models.Model):
 
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+<<<<<<< HEAD
     rate = models.DecimalField(max_digits=5, decimal_places=2)
+=======
+    rate = models.DecimalField(max_digits=5, decimal_places=2)
+>>>>>>> ad29b314a2d8ea90282fd6600b1b3f39904b436e
