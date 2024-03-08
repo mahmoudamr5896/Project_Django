@@ -38,14 +38,11 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "myapp",
-<<<<<<< HEAD
-=======
     "users",
     "django.contrib.sites",
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
->>>>>>> ad29b314a2d8ea90282fd6600b1b3f39904b436e
     'taggit',
 ]
 

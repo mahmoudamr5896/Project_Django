@@ -316,8 +316,5 @@ def sighup(request):
     # }
     
     # html_template = loader.get_template('myapp/index.html')
-<<<<<<< HEAD
     # return HttpResponse(html_template.render(context, request))
-=======
     # return HttpResponse(html_template.render(context, request))
->>>>>>> ad29b314a2d8ea90282fd6600b1b3f39904b436e

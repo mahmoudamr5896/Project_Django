@@ -1,8 +1,5 @@
 from django.contrib import admin
-<<<<<<< HEAD
 # from .models import Myuser
-=======
->>>>>>> ad29b314a2d8ea90282fd6600b1b3f39904b436e
 
 from myapp.models import Category ,CommentReport, Donation, Picture, Project, Tag ,Comment, ProjectReport, Rating, Report , FeaturedProject
 

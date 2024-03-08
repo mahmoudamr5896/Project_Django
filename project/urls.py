@@ -16,11 +16,8 @@ Including another URLconf
 """
 
 from django.contrib import admin
-<<<<<<< HEAD
 from django.urls import path
-=======
 from django.urls import path,include
->>>>>>> ad29b314a2d8ea90282fd6600b1b3f39904b436e
 from django.conf import settings
 from django.conf.urls.static import static
 from myapp import views
@@ -31,10 +28,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
-<<<<<<< HEAD
 
-=======
->>>>>>> ad29b314a2d8ea90282fd6600b1b3f39904b436e
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -43,11 +37,8 @@ urlpatterns = [
      path('project-list/', views.project_list, name='project-list'),
     path("login/",login ,name='login'),
     path("login/",login ,name='login'),
-<<<<<<< HEAD
     path("sighup/",sighup ,name='sighup'),
-=======
     path("/user/login/",sighup ,name='sighup'),
->>>>>>> ad29b314a2d8ea90282fd6600b1b3f39904b436e
     path('search-result/', search, name='search-result'),
     path('create/',create_project, name='create'),
     path('list/', views.project_list, name='list'),

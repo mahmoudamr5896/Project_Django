@@ -99,8 +99,5 @@ class FeaturedProject(models.Model):
 
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-<<<<<<< HEAD
     rate = models.DecimalField(max_digits=5, decimal_places=2)
-=======
     rate = models.DecimalField(max_digits=5, decimal_places=2)
->>>>>>> ad29b314a2d8ea90282fd6600b1b3f39904b436e
