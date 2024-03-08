@@ -25,8 +25,6 @@ from .forms import  CommentReportForm, ProjectForm, CommentForm, DonationForm, P
 from django.db.models import Avg
 from django.template.defaultfilters import slugify
 from django.db.models import Q
-<<<<<<< HEAD
-=======
 
 from users.models import User
 from .models import FeaturedProject, Project, Comment, Donation, Report, Rating,Tag ,Category
@@ -43,7 +41,6 @@ from django.contrib.auth.decorators import login_required
     # return HttpResponse("Happy Day Mahmoud")
     # return render(request, 'myapp/home.html')
 #_________________________________________________ _________________________________________________________________
->>>>>>> ahmedreda
 import re
 from django.db.models import Count
 ##########################################################################################################

@@ -14,15 +14,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-<<<<<<< HEAD
 from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from myapp import views
 from myapp.views import add_comment, category_projects, create_project, index ,login, project_detail, project_list ,sighup,search, team
-=======
->>>>>>> ahmedreda
 
 from django.contrib import admin
 from django.urls import path,include
@@ -51,7 +48,6 @@ urlpatterns = [
     path('<int:project_id>/comment/', add_comment, name='add-comment'),
     path('team/',team,name='team'),
     path('category/<int:category_id>/', category_projects, name='category_projects'),
-<<<<<<< HEAD
     path('project_list/', views.project_list, name='project_list'),
     path('report-project/<int:project_id>/', views.report_project, name='report-project'),
     path('report-comment/<int:comment_id>/<int:project_id>/', views.report_comment, name='report-comment'),
@@ -59,7 +55,6 @@ urlpatterns = [
 
     
 
-=======
     path('user/', include('allauth.urls')),
     path('profile/', usersview.view_profile, name='view_profile'),
     path('profile/', profile, name='view_profile'),
@@ -73,7 +68,6 @@ urlpatterns = [
     path('project_list/', project_list, name='project_list'),
     path('report-project/<int:project_id>/', views.report_project, name='report-project'),
     path('report-comment/<int:comment_id>/<int:project_id>/', views.report_comment, name='report-comment'),
->>>>>>> ahmedreda
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
