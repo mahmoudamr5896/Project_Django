@@ -39,13 +39,11 @@ urlpatterns = [
     path('<int:project_id>/comment/', add_comment, name='add-comment'),
     path('team/',team,name='team'),
     path('category/<int:category_id>/', category_projects, name='category_projects'),
-<<<<<<< HEAD
     path('user/', include('allauth.urls')),
     path('profile/', views.view_profile, name='view_profile'),
     path('profile/', profile, name='view_profile'),
     path('profile/edit/', views.edit_profile, name='edit_profile'),
     path('profile/delete/', views.delete_user, name='delete_user'),
-=======
      path('user/', include('allauth.urls')),
     path('profile/', usersview.view_profile, name='view_profile'),
     path('user/login/None', usersview.redirect_view),
@@ -54,7 +52,6 @@ urlpatterns = [
     path('project_list/', project_list, name='project_list'),
     path('report-project/<int:project_id>/', views.report_project, name='report-project'),
     path('report-comment/<int:comment_id>/<int:project_id>/', views.report_comment, name='report-comment'),
->>>>>>> 6769bf20ecbc8a6daf94e209f736a909e8b6d504
 
 
     
