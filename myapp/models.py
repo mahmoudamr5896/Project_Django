@@ -1,6 +1,8 @@
 
+from django.utils import timezone
 from django.db import models
 from users.models import User
+from taggit .managers import TaggableManager
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -14,7 +16,7 @@ class Tag(models.Model):
 class Project(models.Model):
     title = models.CharField(max_length=200)
     details = models.TextField()
-    tags = models.ManyToManyField(Tag)  # Many-to-many relationship with Tag model
+    tags = TaggableManager()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     total_target = models.DecimalField(max_digits=10, decimal_places=2)
     start_time = models.DateTimeField()
@@ -30,7 +32,7 @@ class Picture(models.Model):
     project = models.ForeignKey(Project, default=None, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='project_images/')
     def __str__(self):
-        return Project.title 
+            return self.image.name
 
 class Comment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
@@ -49,16 +51,29 @@ class Report(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     reason = models.TextField()
     
+
 class ProjectReport(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     reason = models.TextField()
 
 class CommentReport(models.Model):
+    REASON_CHOICES = [
+        ('Inappropriate', 'Inappropriate Content'),
+        ('Spam', 'Spam or Advertising'),
+        ('Abusive', 'Abusive or Offensive'),
+        ('Other', 'Other'),
+    ]
+    
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    reason = models.TextField()
+    reason = models.CharField(max_length=20, choices=REASON_CHOICES)
+    details = models.TextField(blank=True)
+    # created_at = models.DateTimeField(default=timezone.now)
 
+    def __str__(self):
+        return f"Report by {self.user} on {self.created_at}"
+    
 class Rating(models.Model):
     RATING_CHOICES = [
         (1, '1 star'),

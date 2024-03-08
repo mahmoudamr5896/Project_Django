@@ -1,5 +1,8 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
+    {% include  "header.html" %}
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -56,6 +59,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container"> <!-- Main container with added styles -->
         <h1>User Profile</h1>
@@ -64,6 +68,11 @@
 
         <h3>Profile Information:</h3>
         <ul>
+            {% if profile.profile_picture %}
+            <li><strong>Profile:</strong>
+             <img src="{{profile.profile_picture.url}}"/>   
+            </li>
+            {% endif %}
             <li><strong>Email:</strong> {{ user.email }}</li>
             <li><strong>Mobile:</strong> {{ user.mobile }}</li>
             <li><strong>Birthdate:</strong> {{ profile.birthdate }}</li>
@@ -92,4 +101,5 @@
         </form>
     </div>
 </body>
+
 </html>

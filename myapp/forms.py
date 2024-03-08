@@ -1,13 +1,24 @@
 # forms.py
 from django import forms
-from .models import CommentReport, Project, Comment, Donation, ProjectReport, Report, Rating
+from .models import CommentReport, Picture, Project, Comment, Donation, ProjectReport, Report, Rating
+
+
+class ImageForm(forms.ModelForm):
+    class Meta:
+        model = Picture
+        fields = ['image']      
 
 class ProjectForm(forms.ModelForm):
-    tags = forms.CharField(max_length=200, required=False) 
+    ImageFormSet = forms.inlineformset_factory(Project, Picture, form=ImageForm, extra=3)
+    tags = forms.CharField(label='Tags', required=False, help_text='Enter tags separated by commas')
+    
     class Meta:
         model = Project
-        fields = ['title', 'details', 'category', 'total_target', 'start_time', 'end_time','images']
-        
+        fields = ['title', 'details', 'tags', 'category', 'total_target', 'start_time', 'end_time']
+
+
+
+     
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -33,7 +44,7 @@ class ProjectReportForm(forms.ModelForm):
 class CommentReportForm(forms.ModelForm):
     class Meta:
         model = CommentReport
-        fields = ['reason']
+        fields = ['reason', 'details']
 
 class RatingForm(forms.ModelForm):
     class Meta:
