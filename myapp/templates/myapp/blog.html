@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page %}
+
+<div class="card text-bg-dark">
+    {% for project in Projects %}
+    <img src="{{project.image.url}}" class="card-img" alt="...">
+    <div class="card-img-overlay">
+      <h5 class="card-title">{{ project.title }}</h5>
+      <p class="card-text">{{ project.details }}</p>
+      <p>Total Target: {{ project.total_target }}</p>
+    <p>Start Time: {{ project.start_time }}</p>
+    <p>End Time: {{ project.end_time }}</p>
+      <p class="card-text"><small>{{ project.category }}</small></p>
+    </div>
+    {% endfor %}
+  </div>
+
+{% endblock  %}
